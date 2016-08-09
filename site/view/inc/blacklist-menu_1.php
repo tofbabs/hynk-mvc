@@ -14,13 +14,13 @@
 						<a href="<?php echo $host?>/dnd/bulk">Add MSISDN | Bulk Upload</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/dnd/" data-toggle="dropdown">View All BlackList</a>
+						<a href="<?php echo $host?>/dnd/" data-toggle="dropdown">View All DND</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/dnd/approve">Pending</a>
+						<a href="<?php echo $host?>/dnd/approve">Pending DND</a>
 					</li>
                     <li>
-                        <a href="<?php echo $host?>/dnd/history">Approved</a>
+                        <a href="<?php echo $host?>/dnd/history">Approved DND</a>
                     </li>
                     <li>
                         <a href="<?php echo $host?>/dnd/filter">Filter MSISDN</a>
@@ -43,6 +43,14 @@
 				</div>
 
 				<ul class="subnav-menu">
+
+					<li>
+						<a href="<?php echo $host?>/partialdnd/single">Add Single MSISDN</a>
+					</li>
+					<li>
+						<a href="<?php echo $host?>/partialdnd/bulk">Add MSISDN | Bulk Upload</a>
+					</li>
+
 					<?php foreach ($categories as $key => $cat): ?>
 						<li>
 							<a href="<?php echo $host . '/dnd/cat/'. $cat->getId() ?> ">
@@ -76,7 +84,7 @@
 						<a href="<?php echo $host?>/dnc/approve">Pending DNC</a>
 					</li>
                     <li>
-                        <a href="<?php echo $host?>/dnc/history">Approval History</a>
+                        <a href="<?php echo $host?>/dnc/history">Approved DNC</a>
                     </li>
                     <li>
                         <a href="<?php echo $host?>/dnc/filter">Filter MSISDN</a>
@@ -89,5 +97,4 @@
                     </li>
 				</ul>
 			</div>
-
 			

@@ -34,6 +34,7 @@
 				</div>
 
 				<ul class="subnav-menu">
+
 					<?php foreach ($categories as $key => $cat): ?>
 						<li>
 							<a href="<?php echo $host . '/list/cat/'. $cat->getId() ?> ">

@@ -126,9 +126,19 @@
 						<span>Dashboard</span>
 					</a>
 				</li>
-				<li class='<?php echo ($title == 'List') ? 'active' : null ?>'>
-					<a href="<?php echo $host?>/list">
+				<li class='<?php echo ($title == 'dnd') ? 'active' : null ?>'>
+					<a href="<?php echo $host?>/dnd">
 						<span>Full DND</span>
+					</a>
+				</li>
+				<li class='<?php echo ($title == 'partialdnd') ? 'active' : null ?>'>
+					<a href="<?php echo $host?>/dnd">
+						<span>Partial DND</span>
+					</a>
+				</li>
+				<li class='<?php echo ($title == 'dnc') ? 'active' : null ?>'>
+					<a href="<?php echo $host?>/dnc">
+						<span>DNC</span>
 					</a>
 				</li>
 				<li class='<?php echo ($title == 'Help') ? 'active' : null ?>'>

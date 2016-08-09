@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<!-- Apple devices fullscreen -->
 	<meta name="apple-mobile-web-app-capable" content="yes" />
+	
 	<!-- Apple devices fullscreen -->
 	<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -132,7 +133,16 @@
 
 					   "blacklist":{
 					      "index":2,
-					      "controller":"List",
+					      "controller":"dnd",
+					      "method":[
+					         "view"
+					      ],
+					      "priv" : [1,2,3]
+					   },
+
+					   "partialdnd":{
+					      "index":2,
+					      "controller":"partialdnd",
 					      "method":[
 					         "view"
 					      ],
@@ -141,7 +151,7 @@
 
 					   "dnc":{
 					      "index":1,
-					      "controller":"Dnc",
+					      "controller":"dnc",
 					      "method":[
 					         "view"
 					      ],
@@ -162,28 +172,7 @@
 					   }
 					}';
 
-					$nav = json_decode($json_nav,true);
-					// print_r($nav);
-					// echo json_encode($nav);
-					$build = '';
-					foreach ($nav as $key => $options) {
-						# code...
-						$url = $options['controller'] . "/" . implode('/', $options['method']);
-
-						if (!in_array($_SESSION['company']->getPrivilege(), $options['priv'])) continue;
-
-						$class = '';
-						if ($title == $options['controller']) {
-							# code...
-							$class = 'active';
-						}
-
-						$build .= "<li class='" . $class . "'>";
-						$build .= "<a href=" . $host . "/" . $url . ">";
-						$build .= "<span>".ucfirst($key)."</span></a></li>";
-					}
-
-					echo $build;
+					echo build_nav($json_nav, $title);
 
 				?>
 

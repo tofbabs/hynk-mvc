@@ -33,6 +33,9 @@ class Set extends CacheModel {
         return $this->getColumnValue('listsize');
     }
 
+    /**
+    * @desc Add list type e.g. DNC, DND, PartialDND
+    **/
     function setListType($value){
         $this->setColumnValue('list_type', $value);
     }
@@ -49,11 +52,22 @@ class Set extends CacheModel {
     }    
 
 
-    static function getLast(){
+    static function getLast($type){
         # code...
-        return self::getOne(array(), 'id DESC')->getId();
+        return self::getOne(array('list_type' => $type), 'id DESC')->getId();
     }
 
-    
-   
+    static function getUpdate($type, $last){
+        $arrSetUpdate = array();
+        $allset = Set::getAll(array('list_type' => $type));
+
+        foreach ($allset as $key => $set) {
+            # code...
+            if($set->getId() > $last) {
+                $arrSetUpdate[] = $set->getId();
+            }
+        }
+        return $arrSetUpdate;
+    }
+
 }

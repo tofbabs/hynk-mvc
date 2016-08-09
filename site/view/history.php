@@ -1,4 +1,4 @@
-<?php include_once 'header.php'; global $host;?>
+<?php include_once 'header.php';?>
 
        <div class="row">
         <div class="col-sm-12">
@@ -23,8 +23,8 @@
                                 <div class="activity">
                                     <div class="user">
                                         <a href="<?php echo $host . "/user/profile/" . str_replace(' ', '+', $entity->getUser()) ?>"><?php echo $entity->getUser() ?></a> approved
-                                        <span><a href="<?php echo $host .'/list/download-set/'. $entity->getId() ?>">
-                                        <?php echo $entity->getListsize() . ' ' . strtoupper($entity->getListType())?>  Numbers
+                                        <span><a href="<?php echo $host . $title . '/download-set/'. $entity->getId() ?>">
+                                        <?php echo $entity->getListsize() . ' ' . strtoupper($entity->getListType())?>  MSISDNs
                                         </a></span>
                                     </div>
                                     <p>
@@ -39,7 +39,7 @@
 
                 </div>
 
-                <?php show_pagination($current, florr(int($total)/10), $host. '/' . $type . '/history') ?>
+                <?php show_pagination($current, floor($total/10), $host. '/' . $type . '/history') ?>
 
             </div>
         </div>

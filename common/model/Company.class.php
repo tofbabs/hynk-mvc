@@ -32,11 +32,21 @@ class Company extends CacheModel {
     /*
     **  @desc Getter/Setter for Last Set Downloaded
     */
-    function setLastDownloadSet($value){
-        $this->setColumnValue('last_download_set', $value);
+    function setLastDNDSet($value){
+        $this->setColumnValue('last_dnd_set', $value);
     }
-    function getLastDownloadSet(){
-        return $this->getColumnValue('last_download_set');
+
+    function setLastDNCSet($value){
+        $this->setColumnValue('last_dnc_set', $value);
+    }
+
+    function setLastDownloadSet($value, $type){
+        $this->setColumnValue('last_'. $type .'_set', $value);
+    }
+
+
+    function getLastDownloadSet($type){
+        return $this->getColumnValue('last_'. $type .'_set');
     }
     
 }

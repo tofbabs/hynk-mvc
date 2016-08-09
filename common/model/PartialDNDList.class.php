@@ -6,11 +6,11 @@
  */
 include_once 'ParentList.class.php';
 
-class DNCList extends ParentList {
-
-	protected static $tableName = 'dnc';
+class PartialDNDList extends ParentList {
+	
+	protected static $tableName = 'partial_dnd';
     protected static $primaryKey = 'id';
-    protected static $list_type = 'dnc';
+    protected static $list_type = 'partial_dnd';
 
     function setListType($value='dnc'){
         # code...

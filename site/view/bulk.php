@@ -22,34 +22,23 @@
 							</div>
 						</div>
 
-						<div class="form-group">
-						    <label for="textfield" class="control-label col-sm-2">Select Category</label>
-						    <div class="col-sm-10">
+						<?php if ($title == 'partialdnd'): ?>
+							
+							<div class="form-group">
+							    <label for="textfield" class="control-label col-sm-2">Select Category</label>
+							    <div class="col-sm-10">
 
-						        <select name="category" id="select" class='chosen-select form-control'>
-						        	<option value='0'>No category</option>
-						        	<?php foreach ($categories as $key => $cat): ?>
-						        		<option value=<?php echo $cat->getId() ?>><?php echo $cat->getCatName() ?></option>
-						        	<?php endforeach ?>
-						        </select>
-						    </div>
-						</div>
 
-						<!-- <div class="form-group">
-							<label for="textfield" class="control-labe-l col-sm-2">List Type</label>
-							<div class="col-sm-10">
-								<div class="radio-demo-col">
-									<div class="check-line">
-										<input type="radio" class='icheck-me' value="blacklist" data-skin="minimal" name="type">
-										<label class='inline' for="c1">Blacklist</label>
-									</div>
-									<div class="check-line">
-										<input type="radio" class='icheck-me' value="dnc" data-skin="minimal" name="type" checked>
-										<label class='inline' for="c2">Do Not Charge</label>
-									</div>
-								</div>
+							        <select name="category" id="select" class='chosen-select form-control'>
+							        	<option value='0'>No category</option>
+							        	<?php foreach ($categories as $key => $cat): ?>
+							        		<option value=<?php echo $cat->getId() ?>><?php echo $cat->getCatName() ?></option>
+							        	<?php endforeach ?>
+							        </select>
+							    </div>
 							</div>
-						</div> -->
+
+						<?php endif ?>
 
 						<div class="form-group">
 							<label for="textarea" class="control-label col-sm-2">Comment</label>

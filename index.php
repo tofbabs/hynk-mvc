@@ -21,7 +21,7 @@ $A=substr($_SERVER['DOCUMENT_ROOT'], strrpos($_SERVER['DOCUMENT_ROOT'], $_SERVER
 $C=substr($B, strlen($A));
 $posconf=strlen($C) - $conflen;
 $D=substr($C, 0, $posconf);
-$host='http://' . $_SERVER['SERVER_NAME'] . '/' . $D;
+$host='http://' . $_SERVER['SERVER_NAME'] . '/' . $D . '/';
 
 // define('ROOT_URL', $host);
 

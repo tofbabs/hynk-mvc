@@ -1,5 +1,5 @@
 <?php
-define('DEVELOPMENT_ENVIRONMENT', FALSE);
+define('DEVELOPMENT_ENVIRONMENT', TRUE);
 define('DEFAULT_CONROLLER', 'dashboard');
 define('DEFAULT_ACTION', 'index');
 

@@ -153,7 +153,7 @@ class ParentList extends CacheModel {
         
     }
 
-    static function writeListToFile($file,$set_id=NULL){
+    static function writeListToFile($file,$set_id=NULL, $type=NULL){
 
         $query = "SELECT DISTINCT(msisdn) FROM list WHERE ";
 
@@ -161,7 +161,10 @@ class ParentList extends CacheModel {
             # code...
             $query .= "upload_set=" . $set_id . " AND ";
         }
-        $query .= "list_type = '". static::$list_type."' AND status = '1' INTO OUTFILE '" . $file . "' LINES TERMINATED BY '\r\n'";
+        if(isset($type)) $query .= "list_type = '". $type."' AND ";
+        else $query .= "list_type = '". static::$list_type."' AND ";
+
+        $query .= "status = '1' INTO OUTFILE '" . $file . "' LINES TERMINATED BY '\r\n'";
         Utils::printOut($query);
         $db = Database::getInstance();
         $s = $db->getPreparedStatment($query);
@@ -198,7 +201,7 @@ class ParentList extends CacheModel {
         $redis = Cache::getInstance();
         if ($redis == FALSE) {
             # code...
-            $data = count( file( FILE_PATH . static::$list_type . '.csv'));
+            $data = count( @file( FILE_PATH . static::$list_type . '.csv'));
             return $data;
         }
 

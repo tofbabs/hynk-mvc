@@ -59,9 +59,17 @@ class ListController extends Controller {
     function _checkList($type){
 
         $listModel = 'Blacklist';
+        if ($type === 'dnd') {
+            # code...
+            $listModel = 'DNDList';
+        }
         if ($type === 'dnc') {
             # code...
             $listModel = 'DNCList';
+        }
+        if ($type === 'partialdnd') {
+            # code...
+            $listModel = 'PartialDNDList';
         }
 
         return $listModel;
@@ -78,8 +86,12 @@ class ListController extends Controller {
 
         $this->privRoles = array(1,2);
 
-        $cat = Category::getAll();
-        $this->setVariable('categories', $cat);
+        if ($this->list_type == 'partialdnd') {
+            # code...
+            $cat = Category::getAll();
+            $this->setVariable('categories', $cat);
+        }
+        
 
         $this->setView('', 'single');
         $this->setVariable('list-type',$this->list_type);
@@ -99,11 +111,13 @@ class ListController extends Controller {
             $msisdnCount = count($msisdn);
 
             $comment = $_POST['comment'];
-            $category = $_POST['category'];
-
             // Set Comment for the pending update set
             // Status is auto set to 0
             $newList->setComment($comment);
+
+
+            # code...
+            $category = isset($_POST['category']) ? $_POST['category'] : NULL;
             $newList->setCategory($category);
 
             // Counter for Good and Bad msisdn
@@ -123,7 +137,6 @@ class ListController extends Controller {
                     # code...
                     // Save newList Object for every good msisdn parsed
                     $newList->setMsisdn($m[1]);
-                    print_r($newList);
                     $inf = $newList->save(); 
                     // echo "Database INfo: " . $inf;
                     $arr_inf = explode(':', $inf);
@@ -167,8 +180,11 @@ class ListController extends Controller {
 
         $this->privRoles = array(1,2);
 
-        $cat = Category::getAll();
-        $this->setVariable('categories', $cat);
+        if ($this->list_type == 'partialdnd') {
+
+            $cat = Category::getAll();
+            $this->setVariable('categories', $cat);
+        }
 
         $this->setView('', 'bulk');
         $this->setVariable('list-type',$this->list_type);
@@ -191,6 +207,7 @@ class ListController extends Controller {
             if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
 
                 $this->notifyBar('success','Upload Successful');
+                $category = isset($_POST['category']) ? $_POST['category'] : NULL;
 
                 try {
                     // send processing to gearman
@@ -203,7 +220,7 @@ class ListController extends Controller {
                        // whatever details you gathered from the form
                       'file' => $uploadfile,
                       'user' => $_SESSION['company']->getName(),
-                      'category' => $_POST['category'],
+                      'category' => $category,
                       'comment' => $_POST['comment'],
                       'listModel' => $listModel
                       )));
@@ -228,9 +245,6 @@ class ListController extends Controller {
                 // finally{
                 $_SESSION['FILE_PROCESSING'] = $resp;
                 // }
-
-
-
             } 
             else {
              $this->notifyBar('error','Upload Failed');
@@ -598,9 +612,9 @@ $this->setView('', 'filter');
         $listModel::writeListToFile($temp);
         $blacklist = file_get_contents($temp);
 
-        Utils::printOut(FILE_PATH . '/'.$this->list_type.'.csv');
+        Utils::printOut(FILE_PATH . $this->list_type.'.csv');
 
-        file_put_contents(FILE_PATH . '/'.$this->list_type.'.csv', $blacklist);
+        file_put_contents(FILE_PATH . $this->list_type.'.csv', $blacklist);
 
         // Create file for Particular Set Uploaded
         if (isset($set_id)) {
@@ -624,28 +638,42 @@ $this->setView('', 'filter');
 
     function download_recent(){
 
-        $user_last_set_id = $this->u->getLastDownloadSet();
-        $all_set = array();
+        if ($this->list_type == 'partialdnd') {
+            # code...
+            $this->view();
+            exit;
+        }
+
+        $user_last_set_id = $this->u->getLastDownloadSet($this->list_type);
+        $listModel = $this->_checkList($this->list_type);
+
+        // Recent list buffer to download for user
         $list = '';
 
-        $last = Set::getLast();
-        if ($user_last_set_id != $last) {
+        // $last = Set::getLast($this->list_type);
+        $to_implement = getUpdate($this->list_type, $user_last_set_id);
+        $all_set = implode(',',$to_implement);
+
+
+        // if ($user_last_set_id != $last) {
+        if(!empty($to_implement)){
             # get difference from the last time user implemented blacklist
 
-            for ($i = $last; $i > $user_last_set_id; $i--) { 
+            // for ($i = $last; $i > $user_last_set_id; $i--) { 
+            foreach ($to_implement as $key => $i) {
                 # code...
                 // $tmp_file = FILE_PATH . $this->list_type . '_set' . $i . '.csv';
                 $tmp_file = FILE_PATH . $i . '.csv';
-                $all_set[]= $i;
+                // $all_set[]= $i;
                 if(file_exists($tmp_file)) $list .= file_get_contents($tmp_file);
-                $list .= file_get_contents($tmp_file);
+                // $list .= file_get_contents($tmp_file);
             }
 
             // Make file available for Download
             $filename = $this->list_type . '_SET_' . $last . '.txt' ;
             Utils::downloadFile($list,$filename);
 
-            $this->u->setLastDownloadSet($last);
+            $this->u->setLastDownloadSet(end($to_implement), $this->list_type);
             $this->u->save();
             Activity::create('implement', $this->u->getName(), ' ' . ucfirst($this->list_type). ' Set' . implode(',', $all_set));
 
@@ -709,7 +737,7 @@ $this->setView('', 'filter');
             # code...
             Activity::create('implement', $this->u->getName(), ' ' .ucfirst($this->list_type).' Set' . $set_id);
             Utils::downloadFile($list, $filename);
-            $msg = 'You have Downloaded Set '.$set_id.', Go to <a href="'.ROOT_URL.'/list/history">Approve Set History</a>';   
+            $msg = 'You have Downloaded Set '.$set_id.', Go to <a href="'.ROOT_URL. $this->list_type . '/history">Approve Set History</a>';   
             $this->view();
         }
 
@@ -729,18 +757,18 @@ $this->setView('', 'filter');
         foreach ($s as $key => $set) {
 
             # Check if Set is particular list type
-            if ($set->getListType() !== $this->list_type) {
-                # code...
-                continue;
-            }
+            // if ($set->getListType() !== $this->list_type) {
+            //     # code...
+            //     continue;
+            // }
 
             $sid = $set->getId();
-            $file = FILE_PATH . $this->list_type .'_set' . $sid . '.csv';
+            $file = FILE_PATH . $sid . '.csv';
 
             if(file_exists($file))continue;
 
             // $this->createBlacklistFile($sid);
-            $listModel::writeListToFile($file,$sid);
+            $listModel::writeListToFile($file,$sid, $set->getListType());
         }
         $this->notifyBar('info','Set Cache File Regenerated');
         $this->view();

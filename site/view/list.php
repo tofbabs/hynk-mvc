@@ -4,11 +4,11 @@
 	<div class="row">
 
 		<div class="col-sm-12">
-		<?php if ($notFound): ?>
+		<?php if ($isSingle && $notFound): ?>
 			<div class="pull-left">
 				<h4 class="pull-left">Search Entire List Again</h4>
 
-				<form action="<?php echo $host ?>/list/search" method="post" class='search-form form-horizontal pull-left'>
+				<form action="<?php echo $host . $title ?>/search" method="post" class='search-form form-horizontal pull-left'>
 					<div class="search-pane">
 						<input type="text" name="msisdn" value="<?php echo $msisdn?>">
 						<button type="submit" name="searchBtn">
@@ -27,11 +27,11 @@
 		<script type="text/javascript">
 		    $(document).ready(function () {
 
-		    	_delete = function(cid) {
+		    	_delete = function(msisdn) {
 
-		    	  if(confirm('Do you wish to delete user')){
+		    	  if(confirm('Do you wish to remove MSISDN from <?php echo $title ?>')){
 
-		    	    url = options.host + 'user/_delete/' + cid;
+		    	    url = options.host + '<?php echo $title ?>/delete/' + msisdn;
 		    	    console.log(url);
 		    	    $.ajax({
 		    	      url: url,
@@ -39,7 +39,7 @@
 		    	      success: function (data) {
 		    	          // body...
 		    	          console.log('Return Data' + data);
-		    	          $('#user-'+cid).remove();
+		    	          $('#list-'+ msisdn).remove();
 		    	          // window.location.replace(options.host + '/user');
 		    	      }
 		    	    });
@@ -102,7 +102,7 @@
 					</thead>
 					<tbody>
 					<?php foreach ($blacklist as $entity) : ?>
-					<tr>
+					<tr id="list-<?php echo $entity->getMsisdn() ?>">
 						<td class="with-checkbox">
 							<input type="checkbox" name="check" value="1">
 						</td>
@@ -117,10 +117,10 @@
 						<td><?php echo $entity->getComment() ?></td>
 						<?php if($_SESSION['company']->getPrivilege() == 1): ?>
 						<td class='hidden-480'>
-							<a href="<?php echo $host . "/list/approve/" . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Approve">
+							<a href="<?php echo $host . $title . '/approve/' . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Approve">
 								<i class="fa fa-check"></i>
 							</a>
-							<a href="<?php echo $host . "/list/delete/" . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Delete">
+							<a href="<?php echo $host . $title . '/delete/' . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Delete">
 								<i class="fa fa-times"></i>
 							</a>
 						</td>

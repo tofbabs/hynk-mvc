@@ -35,7 +35,7 @@ class CategoryController extends Controller {
             # code...
             $arrdata = array();
             $arrdata['label'] = $cat->getCatName();
-            $arrdata['data'] = Blacklist::getDistinctCount(array('category' => $cat->getId()));
+            $arrdata['data'] = PartialDNDList::getDistinctCount(array('category' => $cat->getId()));
             // print_r($arrdata);
             $flotpie_data[] = $arrdata;
         }

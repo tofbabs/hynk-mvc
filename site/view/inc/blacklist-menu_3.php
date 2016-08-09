@@ -8,20 +8,20 @@
 
 				<ul class="subnav-menu">
 					<li>
-						<a href="<?php echo $host?>/list/" data-toggle="dropdown">View BlackList</a>
+						<a href="<?php echo $host?>/dnd/" data-toggle="dropdown">View DND</a>
 					</li>
-                    <li>
+                   <!--  <li>
                         <a href="<?php echo $host?>/list/history">Approval History</a>
-                    </li>
+                    </li> -->
                     <li>
-                        <a href="<?php echo $host?>/list/filter">Filter MSISDN</a>
+                        <!-- <a href="<?php echo $host?>/list/filter">Filter MSISDN</a> -->
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="<?php echo $host?>/list/download-all">Download Entire Full DND</a>
                     </li>
                     <li>
                         <a href="<?php echo $host?>/list/download-all">Download Most Recent Full DND</a>
-                    </li>
+                    </li> -->
 				</ul>
 			</div>
 
@@ -55,9 +55,9 @@
 				<ul class="subnav-menu">
 
 					<li>
-						<a href="<?php echo $host?>/dnc/view">View</a>
+						<a href="<?php echo $host?>/dnc/view">View DNC</a>
 					</li>
-                    <li>
+                   <!--  <li>
                         <a href="<?php echo $host?>/dnc/history">Approval History</a>
                     </li>
                     <li>
@@ -67,7 +67,7 @@
                         <a href="<?php echo $host?>/dnc/download-all">Download Entire DNC List</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/dnc/download-all">Download Most Recent DNC List</a>
+                        <a href="<?php echo $host?>/dnc/download-all">Download Most Recent DNC List</a> -->
                     </li>
 				</ul>
 			</div>

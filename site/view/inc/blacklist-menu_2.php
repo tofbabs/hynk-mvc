@@ -8,26 +8,26 @@
 
 				<ul class="subnav-menu">
 					<li>
-						<a href="<?php echo $host?>/list/single">Add MSISDN | Single</a>
+						<a href="<?php echo $host?>/dnd/single">Add MSISDN | Single</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/list/bulk">Add MSISDN | Bulk Upload</a>
+						<a href="<?php echo $host?>/dnd/bulk">Add MSISDN | Bulk Upload</a>
 					</li>l>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/list/" data-toggle="dropdown">View BlackList</a>
+						<a href="<?php echo $host?>/dnd/" data-toggle="dropdown">View BlackList</a>
 					</li>
                     <li>
-                        <a href="<?php echo $host?>/list/history">Approval History</a>
+                        <a href="<?php echo $host?>/dnd/history">Approval History</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/list/filter">Filter MSISDN</a>
+                        <a href="<?php echo $host?>/dnd/filter">Filter MSISDN</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/list/download-all">Download Entire Full DND</a>
+                        <a href="<?php echo $host?>/dnd/download-all">Download Entire Full DND</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/list/download-all">Download Most Recent Full DND</a>
+                        <a href="<?php echo $host?>/dnd/download-all">Download Most Recent Full DND</a>
                     </li>
 				</ul>
 			</div>
@@ -43,7 +43,7 @@
 				<ul class="subnav-menu">
 					<?php foreach ($categories as $key => $cat): ?>
 						<li>
-							<a href="<?php echo $host . '/list/cat/'. $cat->getId() ?> ">
+							<a href="<?php echo $host . '/dnd/cat/'. $cat->getId() ?> ">
 								<?php echo $cat->getCatName() ?>
 							</a>
 						</li>

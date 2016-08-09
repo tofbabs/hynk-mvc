@@ -161,7 +161,7 @@
 
 	<div class="container-fluid" id="content">
 		<div id="left">
-			<form action="<?php echo $host?>/list/search" method="post" class='search-form'>
+			<form action="<?php echo $host?>/dnd/search" method="post" class='search-form'>
 				<div class="search-pane">
 					<input type="text" name="msisdn" placeholder="Enter MSISDN">
 					<button type="submit" name="searchBtn">
@@ -181,10 +181,10 @@
 						<a href="<?php echo $host?>/" data-toggle="dropdown">Add</a>
 						<ul class="dropdown-menu">
 							<li>
-								<a href="<?php echo $host?>/list/single">Single</a>
+								<a href="<?php echo $host?>/dnd/single">Single</a>
 							</li>
 							<li>
-								<a href="<?php echo $host?>/list/bulk">Bulk Upload</a>
+								<a href="<?php echo $host?>/dnd/bulk">Bulk Upload</a>
 							</li>
 						</ul>
 					</li>
@@ -192,21 +192,21 @@
 						<a href="#" data-toggle="dropdown">View BlackList</a>
 						<ul class="dropdown-menu">
 							<li>
-								<a href="<?php echo $host?>/list/single">All Category</a>
+								<a href="<?php echo $host?>/dnd/single">All Category</a>
 							</li>
 							<li>
-								<a href="<?php echo $host?>/list/bulk">Category 1</a>
+								<a href="<?php echo $host?>/dnd/bulk">Category 1</a>
 							</li>
 						</ul>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/list/approve">Pending</a>
+						<a href="<?php echo $host?>/dnd/approve">Pending</a>
 					</li>
                     <li>
-                        <a href="<?php echo $host?>/list/history">Approved</a>
+                        <a href="<?php echo $host?>/dnd/history">Approved</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/list/filter">Filter MSISDN</a>
+                        <a href="<?php echo $host?>/dnd/filter">Filter MSISDN</a>
                     </li>
 				</ul>
 			</div>
@@ -223,7 +223,7 @@
 						<a href="<?php echo $host?>/" data-toggle="dropdown">Start</a>
 						<ul class="dropdown-menu">
 							<li>
-								<a href="<?php echo $host?>/list/single">Do</a>
+								<a href="<?php echo $host?>/dnd/single">Do</a>
 							</li>
 							
 						</ul>

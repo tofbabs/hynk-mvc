@@ -8,28 +8,28 @@
 
 				<ul class="subnav-menu">
 					<li>
-						<a href="<?php echo $host?>/list/single">Add Single MSISDN</a>
+						<a href="<?php echo $host?>/dnd/single">Add Single MSISDN</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/list/bulk">Add MSISDN | Bulk Upload</a>
+						<a href="<?php echo $host?>/dnd/bulk">Add MSISDN | Bulk Upload</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/list/" data-toggle="dropdown">View All BlackList</a>
+						<a href="<?php echo $host?>/dnd/" data-toggle="dropdown">View All BlackList</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/list/approve">Pending</a>
+						<a href="<?php echo $host?>/dnd/approve">Pending</a>
 					</li>
                     <li>
-                        <a href="<?php echo $host?>/list/history">Approved</a>
+                        <a href="<?php echo $host?>/dnd/history">Approved</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/list/filter">Filter MSISDN</a>
+                        <a href="<?php echo $host?>/dnd/filter">Filter MSISDN</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/list/download-all">Download Full DND</a>
+                        <a href="<?php echo $host?>/dnd/download-all">Download Full DND</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/list/download-recent">Download Recent DND</a>
+                        <a href="<?php echo $host?>/dnd/download-recent">Download Recent DND</a>
                     </li>
 				</ul>
 			</div>
@@ -45,7 +45,7 @@
 				<ul class="subnav-menu">
 					<?php foreach ($categories as $key => $cat): ?>
 						<li>
-							<a href="<?php echo $host . '/list/cat/'. $cat->getId() ?> ">
+							<a href="<?php echo $host . '/dnd/cat/'. $cat->getId() ?> ">
 								<?php echo $cat->getCatName() ?>
 							</a>
 						</li>

@@ -15,7 +15,7 @@
 					</li>l>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/dnd/">View DND</a>
+						<a href="<?php echo $host?>/dnd/">View All DND</a>
 					</li>
                     <li>
                         <a href="<?php echo $host?>/dnd/history">Approved DND</a>

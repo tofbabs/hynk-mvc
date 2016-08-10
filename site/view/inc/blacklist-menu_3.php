@@ -8,7 +8,7 @@
 
 				<ul class="subnav-menu">
 					<li>
-						<a href="<?php echo $host?>/dnd/" data-toggle="dropdown">View DND</a>
+						<a href="<?php echo $host?>/dnd/" data-toggle="dropdown">View All DND</a>
 					</li>
                    <!--  <li>
                         <a href="<?php echo $host?>/list/history">Approval History</a>

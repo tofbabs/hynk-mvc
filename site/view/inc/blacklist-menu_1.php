@@ -14,7 +14,7 @@
 						<a href="<?php echo $host?>/dnd/bulk">Add MSISDN | Bulk Upload</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/dnd/" data-toggle="dropdown">View All DND</a>
+						<a href="<?php echo $host?>/dnd/">View All DND</a>
 					</li>
 					<li>
 						<a href="<?php echo $host?>/dnd/approve">Pending DND</a>

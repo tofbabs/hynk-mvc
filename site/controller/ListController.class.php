@@ -651,7 +651,7 @@ $this->setView('', 'filter');
         $list = '';
 
         // $last = Set::getLast($this->list_type);
-        $to_implement = getUpdate($this->list_type, $user_last_set_id);
+        $to_implement = Set::getUpdate($this->list_type, $user_last_set_id);
         $all_set = implode(',',$to_implement);
 
 

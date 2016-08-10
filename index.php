@@ -81,6 +81,8 @@ function callHook() {
     // echo $controller;
 
     if (class_exists($controller)) {
+
+        $controller = ucfirst(strtolower($controller));
         $dispatch = new $controller();
     }else{
 

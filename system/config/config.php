@@ -1,7 +1,9 @@
 <?php
 define('DEVELOPMENT_ENVIRONMENT', TRUE);
+
 define('DEFAULT_CONROLLER', 'dashboard');
 define('DEFAULT_ACTION', 'index');
+define('NOT_FOUND_CONTROLLER', 'notfound');
 
 define('BASE_PATH', '/Users/Tofunmi/Sites/blacklist/');
 

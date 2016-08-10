@@ -85,11 +85,13 @@ function callHook() {
     if (class_exists($controller)) {
         $dispatch = new $controller();
     }else{
-        // echo 'I am here';
-        header('HTTP/1.0 404 Not Found');
-        exit;
+
+        error_log("Unknown page/action, Controller = ".$controller.", action = ".$action);
+        $controller = NOT_FOUND_CONTROLLER . 'Controller';
+        Utils::trace('Redirecting to ' .  $controller);
+
+        $dispatch = new $controller();
     }
-    // print_r($dispatch);
     
     if ((int)method_exists($controller, $action)) {
         call_user_func_array(array($dispatch,$action),$data);

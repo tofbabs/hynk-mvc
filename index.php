@@ -50,7 +50,6 @@ function callHook() {
         $area = "admin";
         array_shift($urlArray);
     }
-
     //Controller
     if(isset($urlArray[0]) && !empty($urlArray[0])){
         $controller = array_shift($urlArray);
@@ -80,7 +79,6 @@ function callHook() {
     $model = rtrim($controller, 's');
     $controller .= 'Controller';
     // echo $controller;
-
 
     if (class_exists($controller)) {
         $dispatch = new $controller();

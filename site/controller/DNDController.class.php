@@ -4,7 +4,7 @@
  * Site Index Controller
  */
 
-class DNDController extends ListController {
+class DndController extends ListController {
 
 	protected $list_type;
 

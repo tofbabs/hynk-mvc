@@ -83,6 +83,8 @@
 	<script src="<?php echo $host?>/site/js/plugins/datatables/extensions/dataTables.scroller.min.js"></script>
 
 
+	<!-- Just for demonstration -->
+	<script src="<?php echo $host?>/site/js/config.js"></script>
 	<!-- Theme framework -->
 	<script src="<?php echo $host?>/site/js/eakroko.min.js"></script>
 	<!-- Theme scripts -->

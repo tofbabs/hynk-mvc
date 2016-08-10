@@ -1,0 +1,3 @@
+options = {
+    'host': 'http://localhost/'
+}

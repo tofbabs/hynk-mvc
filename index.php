@@ -76,7 +76,7 @@ function callHook() {
     
     //LOAD THE CONTROLLER
     $controllerName = $controller;
-    $controller = ucwords(strtolower($controller));
+    $controller = ucwords($controller);
     $model = rtrim($controller, 's');
     $controller .= 'Controller';
     // echo $controller;

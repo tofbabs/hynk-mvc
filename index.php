@@ -110,7 +110,7 @@ function __autoloader($className) {
     );
     foreach($paths as $path){
         if(file_exists($path.$className.".class.php")){
-            // echo $path.$className.".class.php </br>";
+            Utils::trace($path.$className.".class.php" . PHP_EOL);
             require_once($path.$className.".class.php");
             break;
         }

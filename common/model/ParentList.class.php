@@ -2,7 +2,7 @@
 /**
  * User Model
  */
-class ParentList extends Model {
+class ParentList extends CacheModel {
 	
     protected static $tableName = 'list';
     protected static $primaryKey = 'id';

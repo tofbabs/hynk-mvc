@@ -110,7 +110,7 @@ function __autoloader($className) {
     );
     foreach($paths as $path){
         if(file_exists($path.$className.".class.php")){
-            Utils::trace($path.$className.".class.php" . PHP_EOL);
+            file_put_contents(ROOT . 'system/log/access.log', $path.$className.".class.php" . PHP_EOL , FILE_APPEND)
             require_once($path.$className.".class.php");
             break;
         }

@@ -57,7 +57,7 @@ class PartialdndController extends ListController {
 
 		if (isset($list)) {
 		    # code...
-		    Activity::create('implement', $this->u->getName(), ' Partial - ' . $c->getCatName() . ucfirst($this->list_type));
+		    Activity::create('implement', $this->u->getName(), ' Partial DND- ' . $c->getCatName());
 		    Utils::downloadFile($list,$filename);
 		}
 

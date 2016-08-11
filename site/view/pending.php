@@ -65,10 +65,10 @@
 								</td>
 								<td class='hidden-1024'><?php echo $entity->getUpdateTime() ?></td>
 								<td class='hidden-480'>
-									<a href="<?php echo $host . $list_type ?>/approve/" . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Approve">
+									<a href="<?php echo $host . $list_type . "/approve/" . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Approve">
 										<i class="fa fa-check"></i>
 									</a>
-									<a href="<?php echo $host . $list_type ?>/delete/" . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Delete">
+									<a href="<?php echo $host . $list_type . "/delete/" . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Delete">
 										<i class="fa fa-times"></i>
 									</a>
 								</td>

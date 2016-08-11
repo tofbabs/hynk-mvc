@@ -25,11 +25,11 @@
 
                                         <?php echo strtoupper($cat->getCatName()) ?>
 
-                                        <span><a href="<?php echo $host . '/partialdnd/cat/'. $cat->getId() ?> ">
+                                        <span><a href="<?php echo $host . '/partialDND/cat/'. $cat->getId() ?> ">
                                             View <i class="fa fa-eye"></i>
                                         </a></span>
 
-                                        <span><a href="<?php echo $host . '/partialdnd/download-cat/'. $cat->getId() ?> ">
+                                        <span><a href="<?php echo $host . '/partialDND/download-cat/'. $cat->getId() ?> ">
                                             Download <i class="fa fa-download"></i>
                                         </a></span>
 

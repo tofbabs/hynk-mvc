@@ -11,7 +11,7 @@
 						<a href="<?php echo $host?>/DND/single">Add Single MSISDN</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>DND/">Add MSISDN | Bulk Upload</a>
+						<a href="<?php echo $host?>DND/bulk">Add MSISDN | Bulk Upload</a>
 					</li>
 					<li>
 						<a href="<?php echo $host?>/DND/">View All DND</a>

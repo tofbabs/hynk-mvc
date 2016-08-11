@@ -10,7 +10,17 @@
 				</div>
 				<div class="box-content nopadding">
 
-				<?php $list_type = ($title == 'blacklist') ? 'list' : $title ?>
+				<?php  
+
+					if($title == 'dnd') {
+						$list_type = 'DND';
+					} elseif ($title == 'partialdnd') {
+						$list_type = 'partialDND';	
+					}else{
+						$list_type = $title;
+					}
+
+				?>
 
 					<form action="<?php echo $host . '/'. $list_type ?>/bulk" method="POST" enctype="multipart/form-data" class='form-horizontal form-striped'>
 						

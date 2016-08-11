@@ -8,7 +8,17 @@
 					<h3>
 						<i class="fa fa-th-list"></i><?php echo ucfirst($title)?> MSISDN</h3>
 				</div>
-				<?php $list_type = ($title == 'blacklist') ? 'list' : $title ?>
+				<?php  
+
+					if($title == 'dnd') {
+						$list_type = 'DND';
+					} elseif ($title == 'partialdnd') {
+						$list_type = 'partialDND';	
+					}else{
+						$list_type = $title;
+					}
+
+				?>
 				<div class="box-content nopadding">
 					<form action="<?php echo $host . '/'.$list_type.'/single' ?>" method="POST" class='form-horizontal form-striped'>
 						

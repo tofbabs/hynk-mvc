@@ -89,7 +89,7 @@ class ApiController extends Controller {
 
         if(!file_exists($l)){
             Utils::trace('File Cache not exist, May take longer to load.');
-            $listModel =  $list_type=='dnd' ? 'DNDlist' : 'DNCList';
+            $listModel =  $list_type=='dnd' ? 'DNDList' : 'DNCList';
             $l = $listModel::getUnique();
             foreach ($l as $list) {
                 echo $list->getMsisdn() . PHP_EOL;

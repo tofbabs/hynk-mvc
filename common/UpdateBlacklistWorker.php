@@ -7,8 +7,9 @@
 	require BASE_PATH . 'lib/Model.class.php';
 	require BASE_PATH . 'lib/CacheModel.class.php';
 	require BASE_PATH . 'common/model/ParentList.class.php';
-	require BASE_PATH . 'common/model/Blacklist.class.php';
+	require BASE_PATH . 'common/model/DNDList.class.php';
 	require BASE_PATH . 'common/model/DNCList.class.php';
+	require BASE_PATH . 'common/model/PartialDNDList.class.php';
 	
 	$worker = new GearmanWorker();
 	$worker->addServer();

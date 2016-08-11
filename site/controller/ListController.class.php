@@ -391,9 +391,9 @@ function approve($msisdn=NULL){
                 # code...
                 $to = $user->getEmail();
                 $msg = "Hello " . $company->getName() . PHP_EOL;
-
-                $msg .= "Kindly log on to the Blacklisting Portal (http://blacklist.atp-sevas.com/blacklist) to download the latest ".ucfirst($this->list_type)." update file." . PHP_EOL;
-                $msg .= "You can also implement by invoking an API with endpoint http://blacklist.atp-sevas.com/blacklist/api/fetchAll".ucfirst($this->list_type)." and providing your email and password for HTTP Basic Authentication." . PHP_EOL;
+                $msg .= "Kindly log on to the Blacklisting Portal (http://blacklist.atp-sevas.com/blacklist) to download the latest ". ucfirst($this->list_type) . " update file." . PHP_EOL;
+                // $msg .= "You can also implement by invoking an API with endpoint http://blacklist.atp-sevas.com/blacklist/api/fetchAll".ucfirst($this->list_type)." and providing your email and password for HTTP Basic Authentication." . PHP_EOL;
+                $msg .= "You can also implement by downloading the entire list on this dropbox file https://goo.gl/5UhXby" . PHP_EOL;
                 $msg .= "Latest Update time: " . $info[0] . PHP_EOL;
                 $msg .= "Additional MSISDN Count: " . $info[1];
 

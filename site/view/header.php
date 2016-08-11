@@ -135,7 +135,7 @@
 
 					   "dnd":{
 					      "index":2,
-					      "controller":"dnd",
+					      "controller":"DND",
 					      "method":[
 					         "view"
 					      ],
@@ -144,7 +144,7 @@
 
 					   "partialdnd":{
 					      "index":2,
-					      "controller":"partialdnd",
+					      "controller":"partialDND",
 					      "method":[
 					         "view"
 					      ],

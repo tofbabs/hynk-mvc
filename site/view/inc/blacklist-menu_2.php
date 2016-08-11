@@ -8,26 +8,26 @@
 
 				<ul class="subnav-menu">
 					<li>
-						<a href="<?php echo $host?>/dnd/single">Add MSISDN | Single</a>
+						<a href="<?php echo $host?>/DND/single">Add MSISDN | Single</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/dnd/bulk">Add MSISDN | Bulk Upload</a>
+						<a href="<?php echo $host?>/DND/bulk">Add MSISDN | Bulk Upload</a>
 					</li>l>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/dnd/">View All DND</a>
+						<a href="<?php echo $host?>/DND/">View All DND</a>
 					</li>
                     <li>
-                        <a href="<?php echo $host?>/dnd/history">Approved DND</a>
+                        <a href="<?php echo $host?>/DND/history">Approved DND</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/dnd/filter">DND Filter MSISDN</a>
+                        <a href="<?php echo $host?>/DND/filter">DND Filter MSISDN</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/dnd/download-all">Download Entire Full DND</a>
+                        <a href="<?php echo $host?>/DND/download-all">Download Entire Full DND</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/dnd/download-all">Download Most Recent Full DND</a>
+                        <a href="<?php echo $host?>/DND/download-all">Download Most Recent Full DND</a>
                     </li>
 				</ul>
 			</div>
@@ -41,12 +41,11 @@
 				</div>
 
 				<ul class="subnav-menu">
-
 					<li>
-						<a href="<?php echo $host?>/partialdnd/single">Add Single MSISDN</a>
+						<a href="<?php echo $host?>/partialDND/">View All</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/partialdnd/bulk">Add MSISDN | Bulk Upload</a>
+						<a href="<?php echo $host?>/partialDND/download">Download Partial</a>
 					</li>
 				</ul>
 			</div>

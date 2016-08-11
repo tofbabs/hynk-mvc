@@ -8,7 +8,7 @@
 
 				<ul class="subnav-menu">
 					<li>
-						<a href="<?php echo $host?>/dnd/" data-toggle="dropdown">View All DND</a>
+						<a href="<?php echo $host?>/DND/" data-toggle="dropdown">View All DND</a>
 					</li>
                    <!--  <li>
                         <a href="<?php echo $host?>/list/history">Approval History</a>
@@ -35,10 +35,10 @@
 
 				<ul class="subnav-menu">
 					<li>
-						<a href="<?php echo $host?>/partialdnd">View All</a>
+						<a href="<?php echo $host?>/partialDND">View All</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/partialdnd/download">Download Partial</a>
+						<a href="<?php echo $host?>/partialDND/download">Download Partial</a>
 					</li>
 				</ul>
 			</div>

@@ -2,7 +2,7 @@
 /**
  * User Model
  */
-class ParentList extends CacheModel {
+class ParentList extends Model {
 	
     protected static $tableName = 'list';
     protected static $primaryKey = 'id';
@@ -206,31 +206,35 @@ class ParentList extends CacheModel {
      */
     static function getDistinctCount($condition=array()){
 
-        $redis = Cache::getInstance();
-        if ($redis == FALSE) {
-            # code...
-            $data = count( @file( FILE_PATH . static::$list_type . '.csv'));
-            return $data;
-        }
+        $data = count( @file( FILE_PATH . static::$list_type . '.csv'));
+        return $data;
 
-        $query_key = static::$tableName . '_' . static::$list_type . '_' . serialize($condition);
-        $check = $redis->get($query_key) == NULL  ? FALSE : TRUE;
 
-        if ($check){
+        // $redis = Cache::getInstance();
+        // if ($redis == FALSE) {
+        //     # code...
+        //     $data = count( @file( FILE_PATH . static::$list_type . '.csv'));
+        //     return $data;
+        // }
 
-            return unserialize($redis->get($query_key));
+        // $query_key = static::$tableName . '_' . static::$list_type . '_' . serialize($condition);
+        // $check = $redis->get($query_key) == NULL  ? FALSE : TRUE;
 
-        } else{
+        // if ($check){
 
-            $data = count( file( FILE_PATH . static::$list_type . '.csv'));
-            self::clearCache($query_key);
+        //     return unserialize($redis->get($query_key));
 
-            // id to column array mapping
-            $redis->set($query_key, serialize($data));
-            $redis->expire($query_key, 108000);
+        // } else{
 
-            return $data;
-        }
+        //     $data = count( file( FILE_PATH . static::$list_type . '.csv'));
+        //     self::clearCache($query_key);
+
+        //     // id to column array mapping
+        //     $redis->set($query_key, serialize($data));
+        //     $redis->expire($query_key, 108000);
+
+        //     return $data;
+        // }
         
     }
 

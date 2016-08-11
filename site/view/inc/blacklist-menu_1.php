@@ -8,28 +8,28 @@
 
 				<ul class="subnav-menu">
 					<li>
-						<a href="<?php echo $host?>/dnd/single">Add Single MSISDN</a>
+						<a href="<?php echo $host?>/DND/single">Add Single MSISDN</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/dnd/bulk">Add MSISDN | Bulk Upload</a>
+						<a href="<?php echo $host?>DND/">Add MSISDN | Bulk Upload</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/dnd/">View All DND</a>
+						<a href="<?php echo $host?>/DND/">View All DND</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/dnd/approve">Pending DND</a>
+						<a href="<?php echo $host?>/DND/approve">Pending DND</a>
 					</li>
                     <li>
-                        <a href="<?php echo $host?>/dnd/history">Approved DND</a>
+                        <a href="<?php echo $host?>/DND/history">Approved DND</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/dnd/filter">Filter MSISDN</a>
+                        <a href="<?php echo $host?>/DND/filter">Filter MSISDN</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/dnd/download-all">Download Full DND</a>
+                        <a href="<?php echo $host?>/DND/download-all">Download Full DND</a>
                     </li>
                     <li>
-                        <a href="<?php echo $host?>/dnd/download-recent">Download Recent DND</a>
+                        <a href="<?php echo $host?>/DND/download-recent">Download Recent DND</a>
                     </li>
 				</ul>
 			</div>
@@ -45,19 +45,19 @@
 				<ul class="subnav-menu">
 
 					<li>
-						<a href="<?php echo $host?>/partialdnd/single">Add Single MSISDN</a>
+						<a href="<?php echo $host?>/partialDND/single">Add Single MSISDN</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/partialdnd/bulk">Add MSISDN | Bulk Upload</a>
+						<a href="<?php echo $host?>/partialDND/bulk">Add MSISDN | Bulk Upload</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/partialdnd">View All</a>
+						<a href="<?php echo $host?>/partialDND">View All</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/partialdnd/approve">View Pending DND</a>
+						<a href="<?php echo $host?>/partialDND/approve">View Pending DND</a>
 					</li>
 					<li>
-						<a href="<?php echo $host?>/partialdnd/download">Download Partial</a>
+						<a href="<?php echo $host?>/partialDND/download">Download Partial</a>
 					</li>
 				</ul>
 			</div>

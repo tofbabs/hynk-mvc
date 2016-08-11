@@ -22,6 +22,4 @@
     });
 </script>
 
-
-<!-- Mirrored from www.eakroko.de/flat/layouts-footer.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Jun 2015 16:11:46 GMT -->
 </html>

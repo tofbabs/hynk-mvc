@@ -29,7 +29,7 @@ class ApiController extends Controller {
         $this->setVariable('default', 'Bad HTTP Header or No Formal Request...Try again');
     }
 
-    function fetchRecent($list_type){
+    function fetchRecent($list_type='dnd'){
 
         // Enable HTTP Basic Authentication
         $this->check = Utils::checkAccess(null,null,TRUE);
@@ -39,28 +39,34 @@ class ApiController extends Controller {
         $u = User::getOne(array('user_email' => $_SERVER['PHP_AUTH_USER']));
         $company = Company::getOne(array('company_id' => $u->getCompany()));
 
-        $user_last_set_id = $company->getLastDownloadSet();
+        // $user_last_set_id = $company->getLastDownloadSet();
+        $user_last_set_id = $this->u->getLastDownloadSet($this->list_type);
+
         $all_set = array();
         $list = '';
 
         $last = Set::getLast();
+
+        // $last = Set::getLast($this->list_type);
+        $to_implement = Set::getUpdate($this->list_type, $user_last_set_id);
+        $last = end($to_implement);
+        $all_set = implode(',',$to_implement);
+
         if ($user_last_set_id != $last) {
             # get difference from the last time user implemented blacklist
 
             for ($i = $last; $i > $user_last_set_id; $i--) { 
                 # code...
-                Utils::printOut('Checking...Set '. $i);
-                $tmp_file = FILE_PATH . $list_type . '_set' . $i . '.csv';
-                $all_set[]= $i;
+                $tmp_file = FILE_PATH . $i . '.csv';
                 if(file_exists($tmp_file)) $list .= file_get_contents($tmp_file);
             }
 
             // Make file available for Download
 
-            $company->setLastDownloadSet($last);
+            $company->setLastDownloadSet($last, $this->list_type);
             $company->save();
 
-            Activity::create('implement', $company->getName(), ' ' . ucfirst($list_type). ' Set' . implode(',', $all_set));
+            Activity::create('implement', $company->getName(), ' ' . ucfirst($list_type). ' Set' . $all_set);
 
         }
         Utils::printOut($list);
@@ -71,7 +77,7 @@ class ApiController extends Controller {
 
     }
 
-    function fetchAllBlacklist($list_type='blacklist'){
+    function fetchAllBlacklist($list_type='dnd'){
 
         $this->setView('', 'raw');
 
@@ -79,14 +85,12 @@ class ApiController extends Controller {
         $this->check = Utils::checkAccess(null,null,TRUE);
 
         $l = FILE_PATH . $list_type . '.csv';
-        Utils::printOut($l);
+        // Utils::printOut($l);
 
         if(!file_exists($l)){
-            Utils::printOut('File Cache not exist, May take longer to load.');
-            $listModel =  $list_type=='blacklist' ? 'Blacklist' : 'DNCList';
+            Utils::trace('File Cache not exist, May take longer to load.');
+            $listModel =  $list_type=='dnd' ? 'DNDlist' : 'DNCList';
             $l = $listModel::getUnique();
-            // $this->setVariable('response',$l);
-            Utils::printOut($l);
             foreach ($l as $list) {
                 echo $list->getMsisdn() . PHP_EOL;
             }

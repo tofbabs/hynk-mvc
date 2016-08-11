@@ -2,7 +2,6 @@
 <html>
 <?php global $host ?>
 
-<!-- Mirrored from www.eakroko.de/flat/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Jun 2015 15:59:16 GMT -->
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />

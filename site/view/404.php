@@ -2,8 +2,6 @@
 <!doctype html>
 <html>
 
-
-<!-- Mirrored from www.eakroko.de/flat/more-error.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Jun 2015 16:07:17 GMT -->
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -73,6 +71,4 @@
 	</div>
 </body>
 
-
-<!-- Mirrored from www.eakroko.de/flat/more-error.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 04 Jun 2015 16:07:17 GMT -->
 </html>

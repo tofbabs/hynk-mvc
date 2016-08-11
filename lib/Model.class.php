@@ -33,22 +33,11 @@ class Model {
         foreach ($this->columns as $key => $value) {
             $keys[":" . $key] = $value;
         }
+        
         $query .= implode(",", array_keys($keys)) . ")";
 
         Utils::printOut($query);
         $db = Database::getInstance();
-
-        $redis = Cache::getInstance();
-        if ($redis == FALSE) {
-            # code...
-            $data = parent::get($query, $condition);
-            // Callback Function to fetch from Cache
-            // self::get($query, $condition);
-            return $data;
-        }
-
-        $query_list = static::$tableName;
-
 
         $s = $db->getPreparedStatment($query);
         // snippet uses PDO

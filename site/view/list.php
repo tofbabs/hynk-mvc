@@ -74,10 +74,12 @@
 			<div class="box box-color box-bordered">
 				<div class="box-title">
 				<?php if (!$isSingle) : ?>
-					<?php if ($title=='blacklist'): ?>
-						<h3><?php echo $blacklist_count . ' '?> Blacklisted MSISDNs</h3>
-					<?php elseif ($title=='dnc'): ?>
+					<?php if ($title === 'dnd'): ?>
+						<h3><?php echo $blacklist_count . ' '?> DND MSISDNs</h3>
+					<?php elseif ($title === 'dnc'): ?>
 						<h3><?php echo $dnc_count . ' '?> Do-Not-Charge MSISDNs</h3>
+					<?php elseif ($title === 'partialdnd'): ?>
+						<h3>Partial DND MSISDNs</h3>
 					<?php endif ?>
 				<?php else: ?>
 					<h3><?php echo 'Search Result: ' . $msisdn ?></h3>

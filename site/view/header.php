@@ -133,7 +133,7 @@
 					      "priv" : [1,2,3]
 					   },
 
-					   "blacklist":{
+					   "dnd":{
 					      "index":2,
 					      "controller":"dnd",
 					      "method":[

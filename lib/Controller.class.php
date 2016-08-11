@@ -14,11 +14,10 @@ class Controller {
 
         $this->template = new Template();
         $this->flash = array();
-
-        $this->setVariable('title', substr($this->getPageTitle(),0,-10));
+        $this->setVariable('title', strtolower(substr($this->getPageTitle(),0,-10)));
 
         // Custom Variables 
-        $blacklist_count = Blacklist::getDistinctCount(array('status' => 1));
+        $blacklist_count = DNDList::getDistinctCount(array('status' => 1));
         $dnc_count = DNCList::getDistinctCount(array('status' => 1));
         $this->setVariable('categories', Category::getAll());
         $this->setVariable('blacklist_count', $blacklist_count);
@@ -68,14 +67,10 @@ class Controller {
     }
     
     protected function setView($folder,$file){
-        
-        if (isset($_SESSION['user_role']) && $this->checkPermission($_SESSION['user_role']) == FALSE) {
-            
-            $this->template->set('','404');
-            exit();
-        } 
-        Utils::trace("Setting View to " . $file);
         $this->template->set($folder,$file);
+        if (isset($_SESSION['user_role']) && $this->checkPermission($_SESSION['user_role']) == FALSE) {
+            $this->template->set('','404');
+        }
     }
 
     protected function ignoreSetView(){

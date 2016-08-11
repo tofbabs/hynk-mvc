@@ -11,7 +11,6 @@ class DndController extends ListController {
 	function __construct($_list_type='dnd') {
 		parent::__construct($_list_type);
 	}
-   
 }
 
 ?>

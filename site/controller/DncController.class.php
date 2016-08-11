@@ -11,7 +11,6 @@ class DncController extends ListController {
 	function __construct($_list_type='dnc') {
 		parent::__construct($_list_type);
 	}
-   
 }
 
 ?>

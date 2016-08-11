@@ -35,6 +35,7 @@ include(ROOT . 'lib/functions.php');
 */
 
 function callHook() {
+    
     global $url;
     global $area;
     $url = rtrim($url,"/");

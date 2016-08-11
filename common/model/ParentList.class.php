@@ -147,15 +147,22 @@ class ParentList extends CacheModel {
         Utils::printOut($query);
         $db = Database::getInstance();
         $s = $db->getPreparedStatment($query);
-        $s->execute();
 
+        // Check if any error during insert
+        if (!$s) {
+            error_log("PDO::errorInfo(): " . var_export($dbh->errorInfo()));
+            return 500;
+        }
+
+        $s->execute();
         self::clearCache();
+        return 200;
         
     }
 
     static function writeListToFile($file,$set_id=NULL, $type=NULL){
 
-        $query = "SELECT DISTINCT(msisdn) FROM list WHERE ";
+        $query = "SELECT DISTINCT(msisdn) FROM ". static::$tableName ." WHERE ";
 
         if (isset($set_id)) {
             # code...
@@ -165,7 +172,8 @@ class ParentList extends CacheModel {
         else $query .= "list_type = '". static::$list_type."' AND ";
 
         $query .= "status = '1' INTO OUTFILE '" . $file . "' LINES TERMINATED BY '\r\n'";
-        Utils::printOut($query);
+        Utils::trace($query);
+
         $db = Database::getInstance();
         $s = $db->getPreparedStatment($query);
         $s->execute();
@@ -225,5 +233,12 @@ class ParentList extends CacheModel {
         }
         
     }
+
+    /*
+    **  @desc Searchs Entire List for specified msisdn
+    */
+    static function searchEntire(){
+    }
+
    
 }

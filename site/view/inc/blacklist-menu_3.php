@@ -1,4 +1,4 @@
-			<div class="subnav <?php echo ($title == 'blacklist' || strtolower($title) == 'dashboard') ? '' : 'subnav-hidden' ?>">
+			<div class="subnav <?php echo ($title == 'dnd' || $title == 'dashboard') ? '' : 'subnav-hidden' ?>">
 				<div class="subnav-title">
 					<a href="<?php echo $host?>/site/#" class='toggle-subnav'>
 						<i class="fa fa-angle-down"></i>
@@ -25,7 +25,7 @@
 				</ul>
 			</div>
 
-			<div class="subnav <?php echo ($title == 'blacklist' || $title == 'dashboard') ? '' : 'subnav-hidden' ?>">
+			<div class="subnav <?php echo ($title == 'partialdnd') ? '' : 'subnav-hidden' ?>">
 				<div class="subnav-title">
 					<a href="<?php echo $host?>/site/#" class='toggle-subnav'>
 						<i class="fa fa-angle-down"></i>
@@ -34,14 +34,12 @@
 				</div>
 
 				<ul class="subnav-menu">
-
-					<?php foreach ($categories as $key => $cat): ?>
-						<li>
-							<a href="<?php echo $host . '/list/cat/'. $cat->getId() ?> ">
-								<?php echo $cat->getCatName() ?>
-							</a>
-						</li>
-					<?php endforeach ?>
+					<li>
+						<a href="<?php echo $host?>/partialdnd">View All</a>
+					</li>
+					<li>
+						<a href="<?php echo $host?>/partialdnd/download">Download Partial</a>
+					</li>
 				</ul>
 			</div>
 

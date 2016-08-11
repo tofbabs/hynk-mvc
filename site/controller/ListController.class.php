@@ -41,12 +41,7 @@ class ListController extends Controller {
      */ 
 
     function view(){
-
         $this->index();
-        // $listModel = $this->_checkList($this->list_type);
-        // $b = $listModel::getAll(array('status' => 1), 'id DESC', 0 , 1000);
-        // $this->setVariable('blacklist', $b);
-        // $this->setView('', 'list');
     }
 
 
@@ -309,23 +304,32 @@ function approve($msisdn=NULL){
         $newSet->setUser($_SESSION['company']->getName());
         $newSet->save();
 
-            // Get Newly Created SET ID
-        $last = Set::getLast();
+        $user_last_set_id = $this->u->getLastDownloadSet($this->list_type);
+        // Get Newly Created SET ID
+        $to_implement = Set::getUpdate($this->list_type, $user_last_set_id);
+        $last = end($to_implement);
+        // $last = Set::getLast();
 
-            // Update status of unapproved blacklist and assigned to last set id
-        $listModel::updateStatus($last);
-
-        $set_info = $newSet->getTime() . "+" . $newSet->getListSize();
-        $this->doBroadCast($admin_comment, $set_info);
+        // Update status of unapproved blacklist and assigned to last set id
+        
+        $status = $listModel::updateStatus($last);
+        
+        if ($status == 200) {
+            # code...
+            $set_info = $newSet->getTime() . "+" . $newSet->getListSize();
+            $this->doBroadCast($admin_comment, $set_info);
 
             // Activity Log
-        Activity::create('approve',$_SESSION['company']->getName(),'Set ' . $newSet->getId() . ' - ' . $newSet->getListSize());
+            Activity::create('approve',$_SESSION['company']->getName(),'Set ' . $newSet->getId() . ' - ' . $newSet->getListSize());
 
             // Create Updated File for download
-        $this->createBlacklistFile($last);
+            $this->createBlacklistFile($last);
 
-            // Refresh Temp memory of blacklisted numbers
+        } else $this->notifyBar('error', 'Something went wrong..Please try again ');
+
+        // Show all Blacklist
         $this->index();
+        
 
     }
 
@@ -410,21 +414,24 @@ function approve($msisdn=NULL){
         $listModel = $this->_checkList($this->list_type);
 
         $this->setVariable('isSingle', 'TRUE');
+        $this->setVariable('notFound','TRUE');
 
         if (isset($_POST['searchBtn'])) {
             $_msisdn = Utils::trimMsisdn($_POST['msisdn']);
             $this->setVariable('msisdn', explode(':',$_msisdn)[1]);
 
             $result = $listModel::getOne(array('msisdn' => $_msisdn));
-            Utils::printOut($result);
+
             $arrResult = array($result);
-            if (!empty($result)) {
+            Utils::trace('Search Result for ' . $_msisdn . ' returns ' );
+
+            if (!empty($arrResult)) {
                     # code...
+                $this->setVariable('notFound','FALSE');
                 $this->setVariable('blacklist', $arrResult);
                 $this->setView('', 'list');
             }
         }else{
-            $this->setVariable('notFound','TRUE');
             $this->notifyBar('error', $_POST['msisdn'] . " Not Found");
             $this->setView('', 'list');
         }
@@ -607,14 +614,12 @@ $this->setView('', 'filter');
 
         // Recreates the whole List file
         $temp = '/tmp/' . $this->list_type . time() .'.csv';
-        Utils::printOut('Temporary File Location: ' . $temp);
 
         $listModel::writeListToFile($temp);
         $blacklist = file_get_contents($temp);
 
-        Utils::printOut(FILE_PATH . $this->list_type.'.csv');
-
-        file_put_contents(FILE_PATH . $this->list_type.'.csv', $blacklist);
+        Utils::trace('Updating Cache Base ' . FILE_PATH . $this->list_type.'.csv');
+        file_put_contents(FILE_PATH . $this->list_type. '.csv' , $blacklist);
 
         // Create file for Particular Set Uploaded
         if (isset($set_id)) {
@@ -745,13 +750,13 @@ $this->setView('', 'filter');
     }
 
     /**  
-     * CREATES ALL blacklist set cache file for Easy Access
+     * CREATES/Regenerates ALL blacklist set cache file for Easy Access
      * @return NULL
      */ 
 
     public function generate_old_set(){
 
-        $s = Set::getAll();
+        $s = Set::getAll(array('list_type' => $this->list_type));
         $listModel = $this->_checkList($this->list_type);
 
         foreach ($s as $key => $set) {
@@ -765,7 +770,8 @@ $this->setView('', 'filter');
             $sid = $set->getId();
             $file = FILE_PATH . $sid . '.csv';
 
-            if(file_exists($file))continue;
+            // Remove existing instance of file
+            if(file_exists($file))unlink($file);;
 
             // $this->createBlacklistFile($sid);
             $listModel::writeListToFile($file,$sid, $set->getListType());

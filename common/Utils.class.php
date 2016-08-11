@@ -287,7 +287,7 @@ class Utils{
     static public function printOut($msg){
 
 		if (DEVELOPMENT_ENVIRONMENT) {
-			var_export($msg) . PHP_EOL;
+			var_dump($msg) . PHP_EOL;
 		}
 
     }

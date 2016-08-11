@@ -22,7 +22,7 @@
 
 				?>
 
-					<form action="<?php echo $host . '/'. $list_type ?>/bulk" method="POST" enctype="multipart/form-data" class='form-horizontal form-striped'>
+					<form action="<?php echo $host . $list_type ?>/bulk" method="POST" enctype="multipart/form-data" class='form-horizontal form-striped'>
 						
 						<div class="form-group">
 							<label for="file" class="control-label col-sm-2">File-input</label>

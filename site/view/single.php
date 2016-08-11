@@ -20,7 +20,7 @@
 
 				?>
 				<div class="box-content nopadding">
-					<form action="<?php echo $host . '/'.$list_type.'/single' ?>" method="POST" class='form-horizontal form-striped'>
+					<form action="<?php echo $host . $list_type.'/single' ?>" method="POST" class='form-horizontal form-striped'>
 						
 						
 						<div class="form-group">

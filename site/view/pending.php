@@ -26,7 +26,7 @@
 				 ?>
 
 				<div class="box-content nopadding">
-					<form action="<?php echo $host . '/' . $list_type ?>/approve" method="POST" class='form-horizontal form-striped'>
+					<form action="<?php echo $host . $list_type ?>/approve" method="POST" class='form-horizontal form-striped'>
 						
 						<div class="form-group">
 							<label for="textarea" class="control-label col-sm-2">Comment</label>
@@ -65,10 +65,10 @@
 								</td>
 								<td class='hidden-1024'><?php echo $entity->getUpdateTime() ?></td>
 								<td class='hidden-480'>
-									<a href="<?php echo $host . "/list/approve/" . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Approve">
+									<a href="<?php echo $host . $list_type ?>/approve/" . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Approve">
 										<i class="fa fa-check"></i>
 									</a>
-									<a href="<?php echo $host . "/list/delete/" . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Delete">
+									<a href="<?php echo $host . $list_type ?>/delete/" . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Delete">
 										<i class="fa fa-times"></i>
 									</a>
 								</td>

@@ -47,32 +47,26 @@
 
 </head>
 
-<body class='error'>
+<body class='login'>
 	<div class="wrapper">
 		<h1>
 			<a href="#"><img src="<?php echo $host?>/site/img/logo-big.png" alt="" class='retina-ready' width="59">BLACKBOX</a>
 		</h1>
 		<?php include_once 'flash.php'; ?>
-		
-		<div class="desc">Enter Your Email Address to Reset Your Password</div>
-		<form action="<?php echo $host?>/login/reset" class='form-horizontal' method="post">
-			<div class="input-group">
-				<input type="email" name="email" placeholder="Email Address" class='form-control'>
-				<span class="input-group-btn">
-					<!-- <button type='submit' class='btn'>
-						<i class="fa fa-search"></i>
-					</button> -->
-				</span>
-			</div>
+		<div class="login-body">
 
-			<div class="buttons">
-				<div class="pull-left">
-					<input type="submit" name="resetBtn" value="Reset Password" class="btn btn-icon">
+			<h2>ACCOUNT RESET</h2>
+			<form action="<?php echo $host ?>/login/reset" method='post' class='form-validate' id="test">
+				<div class="form-group">
+					<div class="email controls">
+						<input type="text" name='email' placeholder="Email address" class='form-control' data-rule-required="true" data-rule-email="true">
+					</div>
 				</div>
-			</div>
-
-		</form>
-		
+				<div class="submit pull-lefet">
+					<input type="submit" name="resetBtn" value="Reset" class='btn btn-primary'>
+				</div>
+			</form>
+		</div>
 	</div>
 </body>
 

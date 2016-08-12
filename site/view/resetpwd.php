@@ -47,11 +47,12 @@
 
 </head>
 
-<body class='error'>
+<body class='login'>
 	<div class="wrapper">
 		<h1>
 			<a href="#"><img src="<?php echo $host?>/site/img/logo-big.png" alt="" class='retina-ready' width="59">BLACKBOX</a>
 		</h1>
+		<?php include_once 'flash.php'; ?>
 		<h2 class="text-center"><i class="fa fa-unlock"></i> Reset Password</h2>
 		<div class="desc">Enter New Password Below</div>
 		<form action="<?php echo $host?>/login/reset" class='form-horizontal' method="post">

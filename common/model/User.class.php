@@ -2,7 +2,7 @@
 /**
  * User Model
  */
-class User extends CacheModel {
+class User extends Model {
 	
     protected static $tableName = 'User';
     protected static $primaryKey = 'user_id'; 

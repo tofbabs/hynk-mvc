@@ -92,7 +92,7 @@ class LoginController extends Controller {
             if ($u->getId() != null ) {
                 # code...
                 $msg = 'Kindly follow this link to reset your password '. ROOT_URL .'/login/reset/' . str_rot13($u->getEmail());
-                Utils::printOut($msg);
+                Utils::trace($msg);
                 Utils::sendmail($_POST['email'], "RESET PASSWORD" , $msg, EMAIL_HEADER);
                 $this->notifyBar('success', 'Please Check ' . $_POST['email'] . ' for your password');
 

@@ -270,58 +270,99 @@
 
 			
 		</div>
-		<div id="main">
-			<div class="container-fluid">
-				<div class="page-header">
-					<div class="pull-left">
-						<h1><?php echo $title ?></h1>
-					</div>
-					<div class="pull-right">
-						<ul class="stats">
-							<li class='satgreen'>
-								<i class="fa fa-tasks"></i>
-								<div class="details">
-									<span class="big"><?php echo Set::getCount(); ?></span>
-									<span>Approved Set</span>
-								</div>
-							</li>
-							<li class='lightred'>
-								<i class="fa fa-exclamation-triangle"></i>
-								<div class="details">
-									<span class="big"><?php echo Blacklist::getCount(array('status' => 1)); ?></span>
-									<span>Blacklisted Numbers</span>
-								</div>
-							</li>f
-						</ul>
-					</div>
-				</div>
-            <?php
-                if (isset($url)) :
-                    # code...
-                    $url = $_REQUEST['url'];
-                    $arrUrl = explode('/',$url);
+				<div id="main">
+					<div class="container-fluid">
+						<div class="page-header">
+							<div class="pull-left">
+								<h1><?php echo strtoupper($title) ?></h1>
+							</div>
+							<div class="pull-right">
+								<ul class="stats">
+									<li class='grey'>
+										<a href="<?php echo $host?>/DND/download-recent" style="text-decoration: none"><i class="fa fa-download"></i>
+										<div class="details">
+											<span class="big">Download</span>
+											<span>Recent Full DND</span>
+										</div></a>
+									</li>
+									<li class='teal'>
+										<a href="<?php echo $host?>/DND/download-all" style="text-decoration: none"><i class="fa fa-cloud-download"></i>
+										<div class="details">
+											<span class="big">Download </span>
+											<span>Entire Full DND</span>
+										</div></a>
+									</li>
+									<li class='satgreen'>
+										<a href="<?php echo $host?>/DND/history" style="text-decoration: none"><i class="fa fa-tasks"></i>
+										<div class="details">
+											<span class="big"><?php echo Set::getCount(); ?></span>
+											<span>Approved Set</span>
+										</div></a>
+									</li>
 
-                    $_SESSION['host'] = $host;
+									<li class='lightred'>
+										<a href="<?php echo $host?>/DND/history" style="text-decoration: none"><i class="fa fa-exclamation-triangle"></i>
+										<div class="details">
+											<span class="big"><?php echo $blacklist_count  ?> DND </span>
+											<span class="big"><?php echo $dnc_count ?> DNC </span>
+										</div></a>
+									</li>
+									<li class="grey">
+										<i class="fa fa-calendar"></i>
+										<div class="details">
+											<span class="big"><?php echo date("F j \, Y") ?></span>
+											<span><?php echo date('l')?><div id="time"></div></span>
+										</div>
+									</li>
 
-                
-            ?>
-				<div class="breadcrumbs">
-					<ul>
-                        <li>
-                            <a href="<?php echo $host?>/">Home</a>
-                            <i class="fa fa-angle-right"></i>
-                        </li>
-                        <?php foreach ($arrUrl as $link) :?>
-						<li>
-                            <a href="<?php echo $host . "/" . $link ?>"><?php echo ucfirst($link )?></a>
-                            <i class="fa fa-angle-right"></i>
-                        </li>
-                    <?php endforeach; ?>
-					</ul>
-					<div class="close-bread">
-						<a href="<?php echo $host?>/site/#">
-							<i class="fa fa-times"></i>
-						</a>
-					</div>
-				</div>
-            <?php endif ?>
+									<script type="text/javascript">
+										function startTime() {
+										    var today = new Date();
+										    var day = today.getDay();
+										    var h = today.getHours();
+										    var m = today.getMinutes();
+										    var s = today.getSeconds();
+										    m = checkTime(m);
+										    s = checkTime(s);
+										    document.getElementById('time').innerHTML =
+										    h + ":" + m + ":" + s;
+										    var t = setTimeout(startTime, 500);
+										}
+										function checkTime(i) {
+										    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+										    return i;
+										}
+									</script>
+								</ul>
+							</div>
+						</div>
+		            <?php
+		                if (isset($_REQUEST['url'])) :
+		                    # code...
+		                    $url = $_REQUEST['url'];
+		                    $arrUrl = explode('/',$url);
+
+		                    $_SESSION['host'] = $host;
+
+		                
+		            ?>
+		            <?php include_once 'flash.php'; ?>
+
+						<div class="breadcrumbs">
+							<ul>
+		                        <li>
+		                            <a href="<?php echo $host?>/">Home</a>
+		                            <i class="fa fa-angle-right"></i>
+		                        </li>
+								<li>							
+		                            <a href="<?php echo $host . "/" . $arrUrl[0] ?>"><?php echo ucfirst($arrUrl[0])?></a>
+		                            
+		                        </li>
+							</ul>
+							<div class="close-bread">
+								<a href="<?php echo $host?>/site/#">
+									<i class="fa fa-times"></i>
+								</a>
+							</div>
+						</div>
+		            <?php endif ?>

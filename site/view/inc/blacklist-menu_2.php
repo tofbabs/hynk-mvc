@@ -7,13 +7,12 @@
 				</div>
 
 				<ul class="subnav-menu">
-					<li>
+					<!-- <li>
 						<a href="<?php echo $host?>/DND/single">Add MSISDN | Single</a>
 					</li>
 					<li>
 						<a href="<?php echo $host?>/DND/bulk">Add MSISDN | Bulk Upload</a>
-					</li>l>
-					</li>
+					</li> -->
 					<li>
 						<a href="<?php echo $host?>/DND/">View All DND</a>
 					</li>
@@ -60,12 +59,12 @@
 				</div>
 
 				<ul class="subnav-menu">
-					<li>
+					<!-- <li>
 						<a href="<?php echo $host?>/dnc/single">Add Single MSISDN</a>
 					</li>
 					<li>
 						<a href="<?php echo $host?>/dnc/bulk">Add MSISDN | Bulk Upload</a>
-					</li>
+					</li> -->
 					<li>
 						<a href="<?php echo $host?>/dnc/view">View DNC</a>
 					</li>

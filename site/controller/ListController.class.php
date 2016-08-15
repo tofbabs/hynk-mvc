@@ -79,7 +79,7 @@ class ListController extends Controller {
 
     function single(){
 
-        $this->privRoles = array(1,2);
+        $this->privRoles = array(1);
 
         if ($this->list_type == 'partialdnd') {
             # code...
@@ -173,7 +173,7 @@ class ListController extends Controller {
 
     function bulk(){
 
-        $this->privRoles = array(1,2);
+        $this->privRoles = array(1);
 
         if ($this->list_type == 'partialdnd') {
 

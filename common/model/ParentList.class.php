@@ -144,7 +144,7 @@ class ParentList extends CacheModel {
         $query = "UPDATE " . static::$tableName ." SET status=1, upload_set=" . $value ." WHERE status=0 ";
         $query .= "AND list_type = '". static::$list_type . "'";        
 
-        Utils::printOut($query);
+        Utils::trace('Updating Pending Blacklist Query: ' . $query);
         $db = Database::getInstance();
         $s = $db->getPreparedStatment($query);
 

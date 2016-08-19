@@ -270,7 +270,7 @@ function approve($msisdn=NULL){
         // Get Count of Unapproved blacklist
     $count = $listModel::getCount(array('status' => 0));
 
-        // Get the Last 1000 updated blacklist
+    // Get the Last 1000 updated blacklist
     $b = $listModel::getAll(array('status' => 0), 'id DESC', 0,1000);
 
         # From API
@@ -875,6 +875,7 @@ $this->setView('', 'filter');
 
     function _debugEMAIL(){
 
+        $this->setView('','plain');
         Utils::sendmail('tofunmi@tm30.net','Testing','Is it working',EMAIL_HEADER);
         Utils::sendmail('tofbab002@yahoo.com','Testing','Is it working',EMAIL_HEADER);
 

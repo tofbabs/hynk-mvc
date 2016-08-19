@@ -409,7 +409,13 @@ function approve($msisdn=NULL){
 
     }
 
+    /**
+     * @desc Searches the Corresponding List Database
+    **/
+
     function search($_msisdn=NULL){
+
+        $this->setView('', 'list');
 
         $listModel = $this->_checkList($this->list_type);
 
@@ -417,27 +423,24 @@ function approve($msisdn=NULL){
         $this->setVariable('notFound','TRUE');
 
         if (isset($_POST['searchBtn'])) {
+
             $_msisdn = Utils::trimMsisdn($_POST['msisdn']);
-            $this->setVariable('msisdn', explode(':',$_msisdn)[1]);
+            $_msisdn = explode(':',$_msisdn)[1];
 
-            $result = $listModel::getOne(array('msisdn' => $_msisdn));
+            $this->setVariable('msisdn', $_msisdn);
+            $arrResult = $listModel::getAll(array('msisdn' => $_msisdn));
 
-            $arrResult = array($result);
             Utils::trace('Search Result for ' . $_msisdn . ' returns ' );
 
-            if (!empty($arrResult)) {
+            if (empty($arrResult)) {
                     # code...
+                $this->notifyBar('error', $_POST['msisdn'] . " Not Found");
+            }else{
                 $this->setVariable('notFound','FALSE');
                 $this->setVariable('blacklist', $arrResult);
-                $this->setView('', 'list');
             }
-        }else{
-            $this->notifyBar('error', $_POST['msisdn'] . " Not Found");
-            $this->setView('', 'list');
+
         }
-
-
-
     }
 
     function delete($value){

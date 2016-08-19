@@ -3,13 +3,12 @@
 		
 	<div class="row">
 
-		<div class="col-sm-12">
+		<p class="col-sm-12">
 		<?php if ($isSingle && $notFound): ?>
-			<div class="pull-left">
-				<h4 class="pull-left">Search Entire List Again</h4>
-
-				<form action="<?php echo $host . $title ?>/search" method="post" class='search-form form-horizontal pull-left'>
-					<div class="search-pane">
+			<div class="text-center col-sm-4">
+				<form action="<?php echo $host . $title ?>/search" method="post" class='search-form form-horizontal'>
+					<div class="search-panel">
+						<label>Search Again</label>
 						<input type="text" name="msisdn" value="<?php echo $msisdn?>">
 						<button type="submit" name="searchBtn">
 							<i class="fa fa-search"></i>
@@ -18,11 +17,9 @@
 				</form>
 			</div>
 		<?php endif ?>
-		</div>
+		</p>
 
 		<div class="col-sm-12">
-
-
 
 		<script type="text/javascript">
 		    $(document).ready(function () {

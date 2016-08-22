@@ -3,7 +3,7 @@
  * Company Model
 **/
 
-class Company extends Model {
+class Company extends CacheModel {
 	
     protected static $tableName = 'Company';
     protected static $primaryKey = 'company_id'; 
@@ -40,7 +40,7 @@ class Company extends Model {
         $this->setColumnValue('last_dnc_set', $value);
     }
 
-    function setLastDownloadSet($value, $type){
+    function setLastDownloadSet($value, $type='DND'){
         $this->setColumnValue('last_'. $type .'_set', $value);
     }
 

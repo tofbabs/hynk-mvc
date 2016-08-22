@@ -29,14 +29,14 @@ class Model {
         $class = get_called_class();
         $query = "REPLACE INTO " . static::$tableName . " (" . implode(",", array_keys($this->columns)) . ") VALUES(";
         $keys = array();
-        Utils::printOut($this->columns);
+        Utils::trace($this->columns);
         foreach ($this->columns as $key => $value) {
             $keys[":" . $key] = $value;
         }
         
         $query .= implode(",", array_keys($keys)) . ")";
 
-        Utils::printOut($query);
+        Utils::trace($query);
         $db = Database::getInstance();
 
         $s = $db->getPreparedStatment($query);
@@ -52,11 +52,11 @@ class Model {
             if ($e->errorInfo[1] == 1062) {
                 // duplicate entry, do something else
                 Utils::trace('This Unique Value already exists.');
-                Utils::printOut('201:Duplicate Entry');
+                Utils::trace('201:Duplicate Entry');
             } else {
                 // an error other than duplicate entry occurred
                 Utils::trace('A database insert error occured' . $e->errorInfo[1]);
-                Utils::printOut('500:'.$e->errorInfo[1]);
+                Utils::trace('500:'.$e->errorInfo[1]);
             }
         }
         // $s->execute($keys);

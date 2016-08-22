@@ -108,9 +108,6 @@ class UserController extends Controller {
 
                 // Log Company Account Creation
                 Activity::create('add-user',$_SESSION['company']->getName(), $company_name);
-                
-                
-
                 // Create or Update Company Details
                 $company->setName($company_name);
                 $company->setPrivilege($role);

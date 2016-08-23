@@ -1,8 +1,8 @@
 <?php
 
 
-include_once '/var/www/html/cm/system/config/config.php';
-require_once '/var/www/html/cm/vendor/autoload.php';
+include_once '/var/www/html/blacklist/system/config/config.php';
+require_once '/var/www/html/blacklist/vendor/autoload.php';
 
 
 function __autoloader($className) {

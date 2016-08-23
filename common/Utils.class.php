@@ -160,15 +160,15 @@ class Utils{
     static function sendmail($email, $subject, $body, $headers){
     	// ... handle form validation, etc
 
-    	// $client = new GearmanClient();
-    	// $client->addServer();
-    	// $result = $client->doBackground("send_email", json_encode(array(
-    	//    // whatever details you gathered from the form
-    	//   'email' => $email,
-    	//   'subject' => $subject,
-    	//   'body' => $body,
-    	//   'from' => $headers
-    	// )));
+    	$client = new GearmanClient();
+    	$client->addServer();
+    	$result = $client->doBackground("send_email", json_encode(array(
+    	   // whatever details you gathered from the form
+    	  'email' => $email,
+    	  'subject' => $subject,
+    	  'body' => $body,
+    	  'from' => $headers
+    	)));
 
     	// Debug Print
     	self::trace(array(

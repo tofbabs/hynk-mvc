@@ -27,6 +27,8 @@ function __autoloader($className) {
 spl_autoload_register('__autoloader');
 
 Utils::setErrorLogging();
+Utils::sendmail('tofunmi@tm30.net','Testing','Is it working',EMAIL_HEADER);
+
 Database::getInstance('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8', DB_USER, DB_PASS);
 
 $settings = [

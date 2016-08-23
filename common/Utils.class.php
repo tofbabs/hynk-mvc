@@ -171,13 +171,13 @@ class Utils{
     	)));
 
     	// Debug Print
-    	self::trace(array(
-    	   // whatever details you gathered from the form
-    	  'email' => $email,
-    	  'subject' => $subject,
-    	  'body' => $body,
-    	  'from' => $headers
-    	));
+    	// self::printOut(array(
+    	//    // whatever details you gathered from the form
+    	//   'email' => $email,
+    	//   'subject' => $subject,
+    	//   'body' => $body,
+    	//   'from' => $headers
+    	// ));
 
 
     }

@@ -2,7 +2,7 @@
 
 
 include_once '/var/www/html/blacklist/system/config/config.php';
-require_once '/var/www/html/blacklist/vendor/autoload.php';
+// require_once '/var/www/html/blacklist/vendor/autoload.php';
 
 
 function __autoloader($className) {

@@ -11,7 +11,7 @@
 
 	$worker->addFunction("send_email", function(GearmanJob $job) {
 	    $workload = json_decode($job->workload());
-	    // print_r($workload);
+	    print_r($workload);
 	    // You would then, of course, actually call this:
 	    sleep(5);
 	    cmail($workload->email, $workload->subject, $workload->body, $workload->from);

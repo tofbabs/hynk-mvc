@@ -3,7 +3,7 @@
 	ini_set('memory_limit', '-1');
 	error_reporting(0);
 
-	require './system/config/config.php';
+	require '../system/config/config.php';
 	require BASE_PATH . 'common/Utils.class.php';
 	require BASE_PATH . 'lib/Database.class.php';
 	require BASE_PATH . 'lib/Model.class.php';

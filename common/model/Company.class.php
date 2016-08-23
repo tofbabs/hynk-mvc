@@ -3,7 +3,7 @@
  * Company Model
 **/
 
-class Company extends CacheModel {
+class Company extends Model {
 	
     protected static $tableName = 'Company';
     protected static $primaryKey = 'company_id'; 

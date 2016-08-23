@@ -875,7 +875,11 @@ $this->setView('', 'filter');
 
     function _debugEMAIL(){
 
-        $this->setView('','plain');
+        Utils::trace('Trying to send a debug Email');
+        // $this->setView('','plain');
+
+        // Utils::sendmail($email, $subject, $body, $headers);
+        
         Utils::sendmail('tofunmi@tm30.net','Testing','Is it working',EMAIL_HEADER);
         Utils::sendmail('tofbab002@yahoo.com','Testing','Is it working',EMAIL_HEADER);
 

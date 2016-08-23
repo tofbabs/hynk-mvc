@@ -69,7 +69,7 @@ class Utils{
 	        ini_set('display_errors', "0");
 	    }
 	    ini_set('log_errors', "1");
-	    ini_set('error_log', ROOT . 'system/log/error_log.php');
+	    ini_set('error_log', BASE_PATH . 'system/log/error_log.php');
 	}
 
 	/**
@@ -79,9 +79,9 @@ class Utils{
 		
 	    // $oldString="<?php\ndie();/*";
 	    if($append){
-	        file_put_contents(ROOT . 'system/log/access.log', $var . PHP_EOL , FILE_APPEND);
+	        file_put_contents(BASE_PATH . 'system/log/access.log', $var . PHP_EOL , FILE_APPEND);
 	    }
-	    else file_put_contents(ROOT . 'system/log/access.log', $var . PHP_EOL);
+	    else file_put_contents(BASE_PATH . 'system/log/access.log', $var . PHP_EOL);
 	}
 
 	static function sanitize($dirty){
@@ -157,7 +157,7 @@ class Utils{
     	return "200:" . $_msisdn;
     }
 
-    static public function sendmail($email, $subject, $body, $headers){
+    static function sendmail($email, $subject, $body, $headers){
     	// ... handle form validation, etc
 
     	// $client = new GearmanClient();
@@ -171,7 +171,7 @@ class Utils{
     	// )));
 
     	// Debug Print
-    	self::printOut(array(
+    	self::trace(array(
     	   // whatever details you gathered from the form
     	  'email' => $email,
     	  'subject' => $subject,

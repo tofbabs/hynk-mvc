@@ -27,7 +27,7 @@ class Model {
     function save() {
 
         $class = get_called_class();
-        $query = "REPLACE INTO " . static::$tableName . " (" . implode(",", array_keys($this->columns)) . ") VALUES(";
+        $query = "INSERT INTO " . static::$tableName . " (" . implode(",", array_keys($this->columns)) . ") VALUES(";
         $keys = array();
         Utils::trace($this->columns);
         foreach ($this->columns as $key => $value) {

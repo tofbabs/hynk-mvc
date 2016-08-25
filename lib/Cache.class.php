@@ -2,7 +2,6 @@
 /**
  * Redis Database Singleton
  */
-require ROOT . "vendor/predis/autoload.php";
 
 class Cache {
     protected static $instance;
@@ -37,7 +36,6 @@ class Cache {
         return self::$instance;
     }
 
-    
     function __destruct(){
         // $this->cache = NULL;
     }

@@ -6,3 +6,4 @@ error_log.php
 config.php
 config.js
 *.rdb
+*.lock

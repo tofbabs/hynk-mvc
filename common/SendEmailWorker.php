@@ -20,7 +20,7 @@
 
 	    $email = new SendGrid\Email();
 	    $email->addTo($workload->email)
-	    ->setFrom($workload->from))
+	    ->setFrom($workload->from)
 	    ->setSubject($workload->subject)
 	    ->setText($workload->body);
 

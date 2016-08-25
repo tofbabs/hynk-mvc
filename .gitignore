@@ -1,6 +1,7 @@
 *.log
 *.csv
 temp/
+vendor/
 error_log.php
 config.php
 config.js

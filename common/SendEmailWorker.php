@@ -4,6 +4,8 @@
 	** @Gearman Worker
 	** Send Email via an API
 	*/
+	require '../vendor/autoload.php';
+
 	require_once "SendMail.php";
 
 	$worker = new GearmanWorker();
@@ -13,35 +15,17 @@
 	    $workload = json_decode($job->workload());
 	    print_r($workload);
 	    // You would then, of course, actually call this:
-	    sleep(5);
-	    cmail($workload->email, $workload->subject, $workload->body, $workload->from);
+
+	    $sendgrid = new SendGrid('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');
+
+	    $email = new SendGrid\Email();
+	    $email->addTo($workload->email)
+	    ->setFrom($workload->from))
+	    ->setSubject($workload->subject)
+	    ->setText($workload->body);
+
+	    $sendgrid->send($email);
 	});
-
 	while ($worker->work());
-
-	function cmail($to, $subject, $body, $from, $retry=FALSE){
-
-		$headers = array(
-		    'From' => $from,
-		    'To' => $to,
-		    'Subject' => $subject
-		);
-
-		print_r($headers);
-// 		$smtp = SendMail::getSession('ssl://smtp.gmail.com','465','maspblacklist@gmail.com','available247');
-		$smtp = SendMail::getSession('ssl://smtp.gmail.com','465','maspblacklisteti@gmail.com','Available247');
-
-		$mail = $smtp->send($to, $headers, $body);
-
-		if (PEAR::isError($mail)) {
-		    echo date('Y-m-d H:i:s') . ' Email Failed to ' . $to . '. Reason:' . $mail->getMessage() . PHP_EOL;
-			// Refresh Connection
-			if(!$retry)cmail($to, $subject, $body, $from, TRUE);
-			SendMail::destroy();
-			 		    
-		} else {
-			echo date('Y-m-d H:i:s') . ' Email Successfully Sent to ' . $to .PHP_EOL ;
-		}
-	}
 
 ?>

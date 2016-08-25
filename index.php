@@ -1,5 +1,7 @@
 <?php
 
+require 'vendor/autoload.php';
+
 date_default_timezone_set('Africa/Lagos');
 define('ROOT',dirname(realpath(__FILE__))."/");
 

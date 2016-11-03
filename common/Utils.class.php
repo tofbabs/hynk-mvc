@@ -85,11 +85,13 @@
 	 */
 	static function trace($var,$append=true){
 		
+		$var = is_array($var) || is_object($var) ? json_encode($var) : $var;
+		$var = date('Y-m-d H:i:s') . ': ' . $var;
 	    // $oldString="<?php\ndie();/*";
-		if($append){
-			file_put_contents(BASE_PATH . 'system/log/access.log', $var . PHP_EOL , FILE_APPEND);
-		}
-		else file_put_contents(BASE_PATH . 'system/log/access.log', $var . PHP_EOL);
+	    if($append){
+	        file_put_contents(BASE_PATH . 'system/log/access.log', $var . PHP_EOL , FILE_APPEND);
+	    }
+	    else file_put_contents(BASE_PATH . 'system/log/access.log', $var . PHP_EOL);
 	}
 
 	static function sanitize($dirty){
@@ -190,18 +192,7 @@
 
     }
 
-    static public function httpAuth($user,$pass){
-    	$auth_key = base64_encode($user . ":" . $pass);
-        // header("Content-Type: text/plain" . "\nAuthorization: Basic $auth_key");
-    	$_SERVER['PHP_AUTH_USER'] = $user;
-    	$_SERVER['PHP_AUTH_PW'] = $pass;
-
-
-    }
-
     static public function checkAccess($username=null,$password=null,$auth=false){
-
-		// print_r($_SERVER);
 
     	if (!$auth) {
 			# code...
@@ -209,42 +200,40 @@
     	}
 
     	if (isset($_SERVER['PHP_AUTH_USER'])) {
+
     		$username = trim($_SERVER['PHP_AUTH_USER']);
     		$password = $_SERVER['PHP_AUTH_PW'];
 
-		// most other servers
-    	} elseif (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+    		if ( ((is_null($username) || $username == '' ) || $password=='') ) {
+    			self::httpBasicAuth();
+    			// return false;
+    		} else {
+    			Utils::trace('User Authenticating with: ' . PHP_EOL . $username);
 
-    		if (strpos(strtolower($_SERVER['HTTP_AUTHORIZATION']),'basic')===0)
-    			list($username,$password) = explode(':',base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'])));
-
-    	}
-
-    	if ( ((is_null($username) || $username == '' ) || $_SERVER['PHP_AUTH_USER'] == 'logout' || $password=='') ) {
-
-    		header('WWW-Authenticate: Basic realm=Blacklist API confirmation: Enter Your Registerd Email as Username with corresponding password' . $_SERVER['PHP_AUTH_USER']);
-    		header('HTTP/1.0 401 Unauthorized');
-    		return false;
-
-    	} else {
-
-    		$u = User::getOne(array('user_email' => $username));
-    		if ($u->getPassword() == $password) {
-				# code...
-				// print_r($u);
-    			$_SESSION['basicauthuser'] = $username;
-    			return TRUE;
-    		}else{
-    			header('Location: http://logout@localhost/blacklist/');
-    			header('HTTP/1.0 401 Unauthorized');
-
+    			$u = User::getOne(array('user_email' => trim($username)));
+    			Utils::trace(json_encode($ua));
+    			if ($u->getId() !== NULL && $u->getPassword() === trim($password)) {
+    				return TRUE;
+    			}
     			return FALSE;
     		}
 
-    		return TRUE;
-
+		// most other servers
+    	} else{
+    		self::httpBasicAuth();
     	}
 
+    }
+
+    static function httpBasicAuth(){
+    	header('WWW-Authenticate: Basic realm="Blacklist API confirmation: Enter Your Registerd Email as Username with corresponding password"');
+    	header('HTTP/1.0 401 Unauthorized');
+
+			// header('Location: http://logout@http:blacklist.atp-sevas.com/blacklist/api');
+    	if (strpos(strtolower($_SERVER['HTTP_AUTHORIZATION']),'basic')===0)
+    		list($username,$password) = explode(':',base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'])));
+
+    	self::checkAccess($username, $password, TRUE);
     }
 
     /*

@@ -7,7 +7,9 @@ header('Content-Type: text/plain');
 global $host;
 
 class ApiController extends Controller {
+
 	private $host;
+    
 	function __construct() {
 		$this->template = new Template();
         $this->setVariable('title', substr($this->getPageTitle(),0,-10));
@@ -16,135 +18,120 @@ class ApiController extends Controller {
         $this->check = Utils::checkAccess();
         $this->setView('', 'raw');
 
-	}
+    }
 
-    /* 
+    /*
         Get list of Blacklisted Numbers @$value=NULL
         Get a SIGNAL variable for a particular MSISDN e.g @$value=23480..
         Resp: 2000
     */
 
     function index(){
-
-        $this->setVariable('default', 'Bad HTTP Header or No Formal Request...Try again');
+        $this->setHttpHeader(400, "BAD Request. Kindly Refer to Documentation");
     }
 
     function fetchRecent($list_type='dnd'){
 
-        // Enable HTTP Basic Authentication
-        $this->check = Utils::checkAccess(null,null,TRUE);
+         $this->setView('', 'raw');
 
-        $this->setView('', 'raw');
+                   // Enable HTTP Basic Authentication
+         // $this->check = Utils::checkAccess(null,null,TRUE);
+         $this->check = Utils::checkAccess();
 
-        $u = User::getOne(array('user_email' => $_SERVER['PHP_AUTH_USER']));
-        $company = Company::getOne(array('company_id' => $u->getCompany()));
 
-        // $user_last_set_id = $company->getLastDownloadSet();
-        $user_last_set_id = $this->u->getLastDownloadSet($this->list_type);
+         if ($this->check) {
 
-        $all_set = array();
-        $list = '';
+            // Check if $list_type is DND or DNC display error 
+             if(strtolower($list_type) == 'dnd' ||  strtolower($list_type) == 'dnc'){
 
-        $last = Set::getLast();
+                 $u = User::getOne(array('user_email' => $_SERVER['PHP_AUTH_USER']));
+                 $company = Company::getOne(array('company_id' => $u->getCompany()));
 
-        // $last = Set::getLast($this->list_type);
-        $to_implement = Set::getUpdate($this->list_type, $user_last_set_id);
-        $last = end($to_implement);
-        $all_set = implode(',',$to_implement);
+                 $user_last_set_id = $company->getLastDownloadSet($list_type);
 
-        if ($user_last_set_id != $last) {
-            # get difference from the last time user implemented blacklist
+                 // Recent list buffer to download for user
+                 $list = '';
 
-            for ($i = $last; $i > $user_last_set_id; $i--) { 
-                # code...
-                $tmp_file = FILE_PATH . $i . '.csv';
-                if(file_exists($tmp_file)) $list .= file_get_contents($tmp_file);
-            }
+                 $to_implement = Set::getUpdate($list_type, $user_last_set_id);
+                 $all_set = implode(',',$to_implement);
 
-            // Make file available for Download
+                 if(!empty($to_implement)){
 
-            $company->setLastDownloadSet($last, $this->list_type);
-            $company->save();
+                     # get difference from the last time user implemented blacklist
+                     foreach ($to_implement as $key => $i) {
 
-            Activity::create('implement', $company->getName(), ' ' . ucfirst($list_type). ' Set' . $all_set);
+                         $tmp_file = FILE_PATH . $i . '.csv';
 
-        }
-        Utils::printOut($list);
-        if ($this->check) echo $list;
-        else echo "501: Bad Authentication";
+                         if(file_exists($tmp_file)) {
+                             $l = file_get_contents($tmp_file);
+                             if ($l === false) $this->setHttpHeader(500, 'Something went wrong. Please try again later');
 
-        // $this->setVariable('response',$list);
+                             $list .= $l;
+                         }
+                     }
+
+                     $company->setLastDownloadSet(end($to_implement), $list_type);
+                     $company->save();
+
+                     Activity::create('implement', $company->getName(), ' ' . ucfirst($list_type). ' Set' . $all_set);
+                     echo $list;
+
+                 }else{
+                     $this->setHttpHeader(202, 'All recent blacklist has been implemented');
+                 }
+
+             }else{
+                 $this->setHttpHeader(400, "BAD Request. Kindly Refer to Documentation");
+             }
+         }
+         else {
+             $this->setHttpHeader(403, 'Invalid User Information.');
+         }
 
     }
 
     function fetchAllBlacklist($list_type='dnd'){
 
         $this->setView('', 'raw');
-
         // Enable HTTP Basic Authentication
-        $this->check = Utils::checkAccess(null,null,TRUE);
+        // $this->check = Utils::checkAccess(null,null,TRUE);
+        $this->check = Utils::checkAccess();
 
-        $l = FILE_PATH . $list_type . '.csv';
-        // Utils::printOut($l);
-
-        if(!file_exists($l)){
-            Utils::trace('File Cache not exist, May take longer to load.');
-            $listModel =  $list_type=='dnd' ? 'DNDList' : 'DNCList';
-            $l = $listModel::getUnique();
-            foreach ($l as $list) {
-                echo $list->getMsisdn() . PHP_EOL;
-            }
-            exit();
-        }
 
         if ($this->check) {
-            # code...
-            echo file_get_contents($l);
-        }
-        else echo "501: Bad Authentication";
-        // $this->setVariable('response', file_get_contents($l));
 
-        $u = User::getOne(array('user_email' => $_SERVER['PHP_AUTH_USER']));
-        $company = Company::getOne(array('company_id' => $u->getCompany()));
+            $l = FILE_PATH . $list_type . '.csv';
 
-        if ($company->getId() != NULL) {
-            // Activity Log
-            Activity::create('implement', $company->getName(), 'All ' . strtoupper($list_type));
+            if(!file_exists($l)){
+                Utils::trace('File Cache not exist, May take longer to finish.');
+                $listModel =  $list_type=='dnd' ? 'DNDList' : 'DNCList';
+                $listModel::writeListToFile($l);
+            }
+
+            $list = @file_get_contents($l);
+            if ($list === false){
+                $this->setHttpHeader(500, 'Something went wrong. Please try again later');
+            }
+
+            $u = User::getOne(array('user_email' => $_SERVER['PHP_AUTH_USER']));
+            $company = Company::getOne(array('company_id' => $u->getCompany()));
+
+            if ($company->getId() != NULL) {
+                // Activity Log
+                Activity::create('implement', $company->getName(), 'All ' . strtoupper($list_type));
+            }
+
+            echo $list;
+
+        } else {
+            $this->setHttpHeader(403, 'Invalid User Information');
         }
-        
+
     }
 
     function fetchAllDNC(){
         $this->fetchAllBlacklist('dnc');
     }
-
-    // function createUser($email, $company){
-
-    //     $c = Company::getOne(array('company_id'=> $company));
-
-    //     if ($c->getId() != NULL) {
-    //         # code...
-    //         $u = User::create(
-    //             $c->getId(),
-    //             Utils::generatePassword(),
-    //             $email,
-    //             'secondary'
-    //         );
-
-    //         $resp = $u->save(); 
-    //         if (explode(':', $resp)[0] == 201) {
-    //             # code...
-    //             $this->setVariable('response', '200:User Exist');
-    //         }else{
-    //             $this->setVariable('response', '200:User Created');
-    //         }
-    //     }else{
-    //         $this->setVariable('response', '401:Company Doesn\'t exist');
-    //     }
-
-    //     // echo $this->check;
-    //     $this->setVariable('check', TRUE);
-    // }
 
     function deleteUser($email){
 
@@ -160,7 +147,6 @@ class ApiController extends Controller {
     }
 
     // To be improved - 
-
     function get($_msisdn=NULL){
 
         $this->check = Utils::checkAccess(null,null,TRUE);
@@ -172,42 +158,11 @@ class ApiController extends Controller {
 
         }
 
-        // Verify URL Parameter
-    /*    
-        $user = isset($_GET['u']) ? User::getOne(array('id' => trim($_GET['u']))) : $this->setVariable('response','403: Incomplete Parameter - No User ID');
-        // print_r($user);
-        $pass = ($user->getPassword() == trim($_GET['p'])) ? TRUE : FALSE;
-        $set_info = isset($set_info) ? $set_info : date('Y-m-d');
-
-         if ($pass) {
-            // Activity Log
-            $log = new Activity();
-            $log->setAction('implement');
-            $log->setActor($user->getName());
-            $log->setObject('Blacklist - ' . $set_info);
-            $log->save();
-
-            if (isset($value)){
-
-                $b = Blacklist::getOne(array('msisdn' => $value));
-                $this->setVariable('response', $b->getId() != null ? 200 : 0);
-
-            }else{
-                # code...
-                $l = Blacklist::getUnique(); //Get one user with username==admin
-                $this->setVariable('response', $l);
-            }
-
-        }
-        else{
-            $this->setVariable('response', '305: Bad Authentication');
-        } 
-    */ 
     }
 
     function search($msisdn){
 
-        $this->check = Utils::checkAccess(null,null,TRUE);
+        $this->check = Utils::checkAccess();
 
         if (isset($_GET['search'])) {
             # code...
@@ -217,16 +172,36 @@ class ApiController extends Controller {
         $resp = 0;
         $result = Utils::trimMsisdn($msisdn);
         $msisdn = explode(':', $result);
+
         if ($msisdn[0] == 200) {
             # code...
-            $b = Blacklist::getOne(array('msisdn' => $msisdn[1]));
-            $resp = $b==FALSE ? 200 : 0; 
+            $b = @file_get_contents('http://localhost:9200/dnd/_search?q=' . $msisdn[1]);
+            // print_r($b);
+            $json_b = json_decode($b);
+            if($json_b->hits->total == 0) {
+                $this->setHttpHeader(202, 'Subscriber Not Blacklisted');
+            }elseif($json_b->hits->total == 1){
+                $this->setHttpHeader(200, 'Number Exist in Blacklist');
+            }else{
+                $this->setHttpHeader(500, 'Something went wrong. Please try again later');
+            }
+
+        }else{
+            $this->setHttpHeader(400, "BAD MSISDN. Kindly check");
         }
-       
-        $this->setVariable('response', $resp);
-        return $resp;
-        
+
     }
+
+    /*
+    *   Set HTTP Header 
+    */
+
+    function setHttpHeader($code, $msg){
+        header("HTTP/1.0 ".$code.":" . $msg);
+        echo $code.":" . $msg;
+        die();
+    }
+
 
     /*
     **  @last=NULL Fetches last 10 Activity
@@ -290,7 +265,7 @@ class ApiController extends Controller {
     function __destruct(){
         $this->setVariable('check', $this->check);
     }
-   
+
 }
 
 Class ActivityFrame{

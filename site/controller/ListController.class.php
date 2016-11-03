@@ -302,7 +302,7 @@ function approve($msisdn=NULL){
         $newSet->setListSize($count);
         $newSet->setListType($this->list_type);
         $newSet->setUser($_SESSION['company']->getName());
-        $newSet->save();
+        $id = $newSet->save();
 
         $user_last_set_id = $this->u->getLastDownloadSet($this->list_type);
         // Get Newly Created SET ID
@@ -316,7 +316,8 @@ function approve($msisdn=NULL){
         
         if ($status == 200) {
             # code...
-            $set_info = $newSet->getTime() . "+" . $newSet->getListSize();
+            $set = Set::getOne(array('id' => $id));
+            $set_info = $set->getTime() . "+" . $newSet->getListSize();
             $this->doBroadCast($admin_comment, $set_info);
 
             // Activity Log
@@ -390,12 +391,13 @@ function approve($msisdn=NULL){
             foreach ($u as $user) {
                 # code...
                 $to = $user->getEmail();
-                $msg = "Hello " . $company->getName() . PHP_EOL;
-                $msg .= "Kindly log on to the Blacklisting Portal (http://blacklist.atp-sevas.com/blacklist) to download the latest ". ucfirst($this->list_type) . " update file." . PHP_EOL;
+                $msg = "<html><p>Hello " . $company->getName() . ',</p>';
+                $msg .= "<p> Kindly log on to the Blacklisting Portal <a href='http://blacklist.atp-sevas.com/blacklist'> here </a> to download the latest ". ucfirst($this->list_type) . " update file.</p>";
                 // $msg .= "You can also implement by invoking an API with endpoint http://blacklist.atp-sevas.com/blacklist/api/fetchAll".ucfirst($this->list_type)." and providing your email and password for HTTP Basic Authentication." . PHP_EOL;
-                $msg .= "You can also implement by downloading the entire list on this dropbox file https://goo.gl/5UhXby" . PHP_EOL;
-                $msg .= "Latest Update time: " . $info[0] . PHP_EOL;
-                $msg .= "Additional MSISDN Count: " . $info[1];
+                $msg .= "<p> You can also implement by downloading the entire list on this dropbox file <a href='https://goo.gl/5UhXby'>here</a></p>";
+                $msg .= "<ul><li>Latest Update time: " . $info[0] ."</li>";
+                $msg .= "<li>Additional MSISDN Count: " . $info[1] . "</li>";
+                $msg .= "</html>";
 
                 //Push to Gearman to Send Email;
                 Utils::sendmail($to, $subject, $msg, EMAIL_HEADER);
@@ -678,7 +680,7 @@ $this->setView('', 'filter');
             }
 
             // Make file available for Download
-            $filename = $this->list_type . '_SET_' . $last . '.txt' ;
+            $filename = $this->list_type . '_SET_' . end($to_implement) . '.txt' ;
             Utils::downloadFile($list,$filename);
 
             $this->u->setLastDownloadSet(end($to_implement), $this->list_type);
@@ -878,10 +880,18 @@ $this->setView('', 'filter');
         Utils::trace('Trying to send a debug Email');
         // $this->setView('','plain');
 
+        $msg = "<html>Hello Testing </br>" ;
+        $msg .= "<p>Kindly log on to the Blacklisting Portal <a href='http://blacklist.atp-sevas.com/blacklist'>here</a> to download the latest update file. </p>";
+        $msg .= "<p>You can also implement by downloading the entire list on this dropbox file <a href='https://goo.gl/5UhXby'>here</a> </a>";
+        $msg .= "<ul><li>Latest Update time: </li>";
+        $msg .= "<li>Additional MSISDN Count: </li>";
+        $msg .= "</html>";
+        $msg .= "</html>";
+
         // Utils::sendmail($email, $subject, $body, $headers);
-        
-        Utils::sendmail('tofunmi@tm30.net','Testing','Is it working',EMAIL_HEADER);
-        Utils::sendmail('tofbab002@yahoo.com','Testing','Is it working',EMAIL_HEADER);
+
+        Utils::sendmail('tofunmi@tm30.net','Testing',$msg,EMAIL_HEADER);
+        Utils::sendmail('tofbab002@yahoo.com','Testing',$msg,EMAIL_HEADER);
 
     }
 

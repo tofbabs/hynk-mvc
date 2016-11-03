@@ -204,7 +204,7 @@
 
 	<div class="container-fluid" id="content">
 		<div id="left">
-			<form action="<?php echo $host ?>/list/search" method="post" class='search-form'>
+			<form action="<?php echo $host ?>/DND/search" method="post" class='search-form'>
 				<div class="search-pane">
 					<input type="text" name="msisdn" placeholder="Enter MSISDN">
 					<button type="submit" name="searchBtn">
@@ -314,21 +314,21 @@
 					<div class="pull-right">
 						<ul class="stats">
 							<li class='grey'>
-								<a href="<?php echo $host?>/list/download-recent" style="text-decoration: none"><i class="fa fa-download"></i>
+								<a href="<?php echo $host?>/DND/download-recent" style="text-decoration: none"><i class="fa fa-download"></i>
 								<div class="details">
 									<span class="big">Download</span>
 									<span>Recent Full DND</span>
 								</div></a>
 							</li>
 							<li class='teal'>
-								<a href="<?php echo $host?>/list/download-all" style="text-decoration: none"><i class="fa fa-cloud-download"></i>
+								<a href="<?php echo $host?>/DND/download-all" style="text-decoration: none"><i class="fa fa-cloud-download"></i>
 								<div class="details">
 									<span class="big">Download </span>
 									<span>Entire Full DND</span>
 								</div></a>
 							</li>
 							<li class='satgreen'>
-								<a href="<?php echo $host?>/list/history" style="text-decoration: none"><i class="fa fa-tasks"></i>
+								<a href="<?php echo $host?>/DND/history" style="text-decoration: none"><i class="fa fa-tasks"></i>
 								<div class="details">
 									<span class="big"><?php echo Set::getCount(); ?></span>
 									<span>Approved Set</span>
@@ -336,7 +336,7 @@
 							</li>
 
 							<li class='lightred'>
-								<a href="<?php echo $host?>/list/history" style="text-decoration: none"><i class="fa fa-exclamation-triangle"></i>
+								<a href="<?php echo $host?>/DND/history" style="text-decoration: none"><i class="fa fa-exclamation-triangle"></i>
 								<div class="details">
 									<span class="big"><?php echo $blacklist_count  ?> DND </span>
 									<span class="big"><?php echo $dnc_count ?> DNC </span>

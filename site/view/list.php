@@ -116,10 +116,10 @@
 						<td><?php echo $entity->getComment() ?></td>
 						<?php if($_SESSION['company']->getPrivilege() == 1): ?>
 						<td class='hidden-480'>
-							<a href="<?php echo $host . $title . '/approve/' . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Approve">
+							<a href="<?php echo $host . strtoupper($title) . '/approve/' . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Approve">
 								<i class="fa fa-check"></i>
 							</a>
-							<a href="<?php echo $host . $title . '/delete/' . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Delete">
+							<a href="<?php echo $host . strtoupper($title) . '/delete/' . $entity->getMsisdn() ?>" class="btn" rel="tooltip" title="Delete">
 								<i class="fa fa-times"></i>
 							</a>
 						</td>

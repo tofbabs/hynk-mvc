@@ -22,7 +22,7 @@
 	    $email->addTo($workload->email)
 	    ->setFrom($workload->from)
 	    ->setSubject($workload->subject)
-	    ->setText($workload->body);
+	    ->setHtml($workload->body);
 
 	    $sendgrid->send($email);
 	});

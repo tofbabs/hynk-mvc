@@ -1,3 +1,3 @@
 options = {
-    'host': 'http://localhost/'
+    'host': 'http://blacklist.atp-sevas.com/'
 }

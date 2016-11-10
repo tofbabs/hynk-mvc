@@ -312,7 +312,7 @@
 			return isset($flippedOriginal[$msisdn]);
 		}
 
-		public static function doBroadcast(array $companyUsersMapping, $listType = 'Blacklist'){
+		public static function doBroadcast(array $companyUsersMapping, $set_info, $listType = 'Blacklist'){
 
 				$subject = "NEW UPDATE: ".ucfirst($listType)." MSISDN";
 

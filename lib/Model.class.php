@@ -78,7 +78,6 @@ class Model {
     * This function deletes an entry in bulk from DB.
     **/
     static function deleteBulk($tableName, $columnName, $toBeDeleted) {
-      $columnPlaceholders = implode(',', array_fill(0, count($toBeDeleted), '?'));
       $toBeDeleted = implode(',', $toBeDeleted);
       $query = "DELETE FROM $tableName WHERE $columnName IN ($toBeDeleted)";
       $db = Database::getInstance();

@@ -2,25 +2,25 @@
 /**
  * User Model
  */
-class Set extends CacheModel {
-	
+class Set extends Model {
+
     protected static $tableName = 'UpdateSet';
     protected static $primaryKey = 'id';
 
-    
+
     function setId($value){
         $this->setColumnValue('id', $value);
     }
     function getId(){
         return $this->getColumnValue('id');
     }
-    
+
     function setComment($value){
         $this->setColumnValue('comment', $value);
     }
     function getComment(){
         return $this->getColumnValue('comment');
-    } 
+    }
 
     function getTime(){
         return $this->getColumnValue('createdon');
@@ -49,7 +49,7 @@ class Set extends CacheModel {
 
     function getUser(){
         return $this->getColumnValue('approved_by');
-    }    
+    }
 
 
     static function getLast($type){

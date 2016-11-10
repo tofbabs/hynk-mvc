@@ -25,6 +25,9 @@
                     <li>
                         <a href="<?php echo $host?>/DND/filter">Filter MSISDN</a>
                     </li>
+										<li>
+												<a href="<?php echo $host?>/DND/whitelist">Whitelist MSISDN</a>
+										</li>
                     <li>
                         <a href="<?php echo $host?>/DND/download-all">Download Full DND</a>
                     </li>
@@ -98,4 +101,3 @@
                     </li>
 				</ul>
 			</div>
-			

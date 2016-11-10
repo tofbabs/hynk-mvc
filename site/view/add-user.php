@@ -14,7 +14,7 @@
                     <input type="hidden" name="user_id" value="<?php echo isset($company_id) ? $company_id : '' ?>">
 
                     <div class="form-group">
-                        <label for="textfield" class="control-label col-sm-2">Company Name</label>	
+                        <label for="textfield" class="control-label col-sm-2">Company Name</label>
                         <div class="col-sm-10">
                             <input type="text" name="company_name" placeholder="Company Name" class="form-control" value="<?php echo isset($company_name) ? $company_name : '' ?>" required>
                         </div>
@@ -23,11 +23,11 @@
                     <!-- Add Primary Contact-->
 
                     <div class="form-group">
-                        <label for="textfield" class="control-label col-sm-2">Primary Contact </label>	
+                        <label for="textfield" class="control-label col-sm-2">Primary Contact </label>
                         <div class="col-sm-10">
                             <input type="email" name="primary_email" placeholder="Email Address" class="form-control" value="<?php echo isset($primary_user) ? $primary_user->getEmail() : '' ?>" required>
                         </div>
-                    </div>                
+                    </div>
 
                     <div class="form-group">
                         <label for="textfield" class="control-label col-sm-2">Role</label>
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="form-group" id="dynamicInput">
-                    
+
                         <label for="textfield" class="control-label col-sm-2">Secondary Contact</label>
                         <div class="col-sm-8">
                             <input id="email1" type="email" name="secondary_email" class="form-control" value="<?php echo isset($secondary_user) ? $secondary_user->getEmail() : '' ?>" >

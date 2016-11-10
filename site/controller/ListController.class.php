@@ -23,33 +23,33 @@ class ListController extends Controller {
         $this->setVariable('title', $this->list_type);
         $this->u = $_SESSION['company'];
     }
-    
+
     function index(){
 
         $listModel = $this->_checkList($this->list_type);
         $b = $listModel::getAll(array(), 'id DESC', 0 , 1000);
-        
+
         $this->setVariable('blacklist', $b);
         $this->setVariable('isSingle', FALSE);
         $this->setView('', 'list');
     }
 
-    /**  
+    /**
      * Views All Approved List
      * @param NULL
      * @return NULL
-     */ 
+     */
 
     function view(){
         $this->index();
     }
 
 
-    /**  
+    /**
      * History of all list updated on Site
      * @param set_id New upload Set ID.
      * @return listModel
-     */ 
+     */
 
     function _checkList($type){
 
@@ -71,11 +71,11 @@ class ListController extends Controller {
 
     }
 
-    /**  
+    /**
      * Adds sinlgle entries from Textbox to the List DB (Blacklist or DNC)
      * @param set_id New upload Set ID.
      * @return NULL
-     */ 
+     */
 
     function single(){
 
@@ -86,7 +86,7 @@ class ListController extends Controller {
             $cat = Category::getAll();
             $this->setVariable('categories', $cat);
         }
-        
+
 
         $this->setView('', 'single');
         $this->setVariable('list-type',$this->list_type);
@@ -132,7 +132,7 @@ class ListController extends Controller {
                     # code...
                     // Save newList Object for every good msisdn parsed
                     $newList->setMsisdn($m[1]);
-                    $inf = $newList->save(); 
+                    $inf = $newList->save();
                     // echo "Database INfo: " . $inf;
                     $arr_inf = explode(':', $inf);
                     if ($arr_inf[0] != 201) {
@@ -140,7 +140,7 @@ class ListController extends Controller {
                         Activity::create('add-list', $_SESSION['company']->getName() , $msisdnCount);
                         $goodCount++;
                     }else{
-                        $dupCount++;   
+                        $dupCount++;
                     }
 
                 }
@@ -154,22 +154,22 @@ class ListController extends Controller {
             }
 
             if (isset($goodCount) && $goodCount != 0){
-                $this->notifyBar('success',  $goodCount . ' msisdn added to '.ucfirst($this->list_type)); 
+                $this->notifyBar('success',  $goodCount . ' msisdn added to '.ucfirst($this->list_type));
             }
 
             if(isset($badCount) && $badCount != 0){
                 $this->notifyBar('error',  $badCount . ' invalid msisdn not added to '.ucfirst($this->list_type));
             }
         }
-        
+
     }
 
-    /**  
+    /**
      * @desc Adds Bulk Entry from Uploaded File to the List DB (Blacklist or DNC)
-     * Runs as a Gearman Client to execute file processing at the background 
+     * Runs as a Gearman Client to execute file processing at the background
      * @param set_id New upload Set ID.
      * @return NULL
-     */ 
+     */
 
     function bulk(){
 
@@ -221,7 +221,7 @@ class ListController extends Controller {
                       )));
 
                     // $jobHandle = $client->doBackground("process_file", $uploadfile);
-                    
+
                     $resp["msg"] = "File Processing...";
                     $resp["handle"] = $jobHandle;
 
@@ -236,11 +236,11 @@ class ListController extends Controller {
                     if(isset($resp['error']) && $resp['error']){
                         $this->notifyBar('error',$resp['msg']);
                     }
-                } 
+                }
                 // finally{
                 $_SESSION['FILE_PROCESSING'] = $resp;
                 // }
-            } 
+            }
             else {
              $this->notifyBar('error','Upload Failed');
              exit();
@@ -282,7 +282,7 @@ function approve($msisdn=NULL){
             // Refresh Temp memory of blacklisted numbers
             // $b = Blacklist::getAll(array('status' => 0), 'id DESC');
         exit();
-    }        
+    }
 
         // If User Clicks Approve Button, Change Status of Blacklist and Notify Providers
     if(isset($_POST['approveBtn'])) {
@@ -311,9 +311,9 @@ function approve($msisdn=NULL){
         // $last = Set::getLast();
 
         // Update status of unapproved blacklist and assigned to last set id
-        
+
         $status = $listModel::updateStatus($last);
-        
+
         if ($status == 200) {
             # code...
             $set = Set::getOne(array('id' => $id));
@@ -330,7 +330,7 @@ function approve($msisdn=NULL){
 
         // Show all Blacklist
         $this->index();
-        
+
 
     }
 
@@ -349,11 +349,11 @@ function approve($msisdn=NULL){
 
 }
 
-    /**  
+    /**
      * History of all list updated on Site
      * @param set_id New upload Set ID.
      * @return NULL
-     */ 
+     */
 
     function history($page = NULL){
         # code...
@@ -367,7 +367,7 @@ function approve($msisdn=NULL){
 
         $type = $this->list_type=='dnc' ? 'dnc' : 'list';
         $this->setVariable('type', $type);
-        $this->setView('', 'history');        
+        $this->setView('', 'history');
     }
 
 
@@ -402,9 +402,9 @@ function approve($msisdn=NULL){
                 //Push to Gearman to Send Email;
                 Utils::sendmail($to, $subject, $msg, EMAIL_HEADER);
             }
-            
-        } 
-        
+
+        }
+
         // Activity Log
         $log = new Activity('notify','System','All Providers' . $set_info);
         $log->save();
@@ -467,18 +467,18 @@ function approve($msisdn=NULL){
 
     }
 
-    /**  
+    /**
      * Filters Uploaded Base with Blacklist
      * @param set_id New upload Set ID.
      * @return NULL
-     */ 
+     */
 
     function filter(){
 
         if(isset($_POST['fileFilterBtn'])) {
 
             $uploadfile = UPLOAD_PATH . $this->u->getName() . "_dirty_" . time();
-            
+
             // Gearman Response Buffer Variable
             $resp = '';
 
@@ -505,7 +505,7 @@ function approve($msisdn=NULL){
                       )));
 
                     // $jobHandle = $client->doBackground("process_file", $uploadfile);
-                    
+
                     $resp["msg"] = "File Processing...";
                     $resp["handle"] = $jobHandle;
 
@@ -515,7 +515,7 @@ function approve($msisdn=NULL){
                     // some error handling
                     $resp["msg"] = "There occured a strange error.";
                     $resp["error"] = true;
-                } 
+                }
                 // finally {
                     // Display Response
                 if(isset($resp['error']) && $resp['error']){
@@ -526,7 +526,7 @@ function approve($msisdn=NULL){
 
                 // }
 
-            } 
+            }
             else {
              $this->notifyBar('error','Upload Failed');
              exit();
@@ -541,7 +541,7 @@ function approve($msisdn=NULL){
         $api = new ApiController();
         $dirtyArr = explode(PHP_EOL, $_POST['dirty']);
         if(strlen($dirtyArr[0]) > 14){
-         $dirtyArr = explode(",", $dirtyArr[0]); 
+         $dirtyArr = explode(",", $dirtyArr[0]);
      }
 
             // $dirtyArr = explode(",", $_POST['dirty']);
@@ -555,7 +555,7 @@ function approve($msisdn=NULL){
         if($api->search($msisdn) == 0){
             $cleanArr[]=$msisdn;
                     // file_put_contents($filtered, $msisdn, FILE_APPEND);
-        } 
+        }
 
     }
     $this->setVariable('clean', $cleanArr);
@@ -573,11 +573,84 @@ $this->setView('', 'filter');
 
 }
 
-    /**  
+function whitelist() {
+
+  if (isset($_POST['fileWhitelist'])) {
+    $uploadfile = UPLOAD_PATH . $this->u->getName() . "_whitelist_" . time();
+
+    // Gearman Response Buffer Variable
+    $resp = '';
+
+    // Remove all whitespace character from uploadfile name
+    $uploadfile = str_replace(' ','_',$uploadfile);
+
+    if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+
+        $jobLoad = json_encode(array(
+           // whatever details you gathered from the form
+          'file' => $uploadfile,
+          'type' => 'file',
+        ));
+
+        $this->notifyBar('success','Upload Successful');
+        // finally {
+            // Display Response
+        if(isset($resp['error']) && $resp['error']){
+            $this->notifyBar('error',$resp['msg']);
+        }
+
+        $_SESSION['FILE_PROCESSING'] = $resp;
+        // }
+    }
+    else {
+     $this->notifyBar('error','Upload Failed');
+     exit();
+ }
+
+  }
+
+  if (isset($_POST['screenWhitelist'])) {
+
+    $uploadfile = $_POST['whitelist'];
+    $jobLoad = json_encode(array(
+       // whatever details you gathered from the form
+      'file' => $uploadfile,
+      'type' => 'plain',
+    ));
+  }
+
+  try {
+      // send processing to gearman
+      $client = new GearmanClient();
+      $client->addServer();
+
+      $listModel = $this->_checkList('dnd');
+      // store the gearman handle and send the task to the background
+      // Run Process in Background
+      $jobHandle = $client->doBackground("process_whitelist_file", $jobLoad);
+
+      // $jobHandle = $client->doBackground("process_file", $uploadfile);
+
+      $resp["msg"] = "File Processing...";
+      $resp["handle"] = $jobHandle;
+
+      if ($client->returnCode() != GEARMAN_SUCCESS) throw new Exception("Could not add the job to the queue.", 1);
+
+      $this->notifyBar('info','Numbers Successfully Added to Whitelist..');
+
+  } catch(Exception $e) {
+      // some error handling
+      $resp["msg"] = "There occured a strange error.";
+      $resp["error"] = true;
+  }
+
+  $this->setView('', 'whitelist');
+}
+    /**
      * Checks File Upload Status
      * @param jobHandle
      * @return json status
-     */ 
+     */
 
     function file_status($jobHandle){
 
@@ -601,17 +674,17 @@ $this->setView('', 'filter');
                 // some error handling
             $resp["msg"] = "There occured a strange error.";
             $resp["error"] = true;
-        } 
+        }
         // finally {
-        return (json_encode($resp));    
+        return (json_encode($resp));
         // }
     }
 
-    /**  
+    /**
      * Downloads all blacklist and updates the Activity Table.
      * @param set_id New upload Set ID.
      * @return NULL
-     */ 
+     */
 
     function createBlacklistFile($set_id=NULL){
 
@@ -635,16 +708,16 @@ $this->setView('', 'filter');
 
         $this->notifyBar('info','Entire '.strtoupper($this->list_type).' Cache File Regenerated');
         $this->view();
-        
+
 
     }
 
-    /**  
-     * Downloads Most Recent List for the particular 
+    /**
+     * Downloads Most Recent List for the particular
      * User account Logged in and Updates the Activity Table.
-     * @param 
+     * @param
      * @return NULL
-     */ 
+     */
 
     function download_recent(){
 
@@ -669,7 +742,7 @@ $this->setView('', 'filter');
         if(!empty($to_implement)){
             # get difference from the last time user implemented blacklist
 
-            // for ($i = $last; $i > $user_last_set_id; $i--) { 
+            // for ($i = $last; $i > $user_last_set_id; $i--) {
             foreach ($to_implement as $key => $i) {
                 # code...
                 // $tmp_file = FILE_PATH . $this->list_type . '_set' . $i . '.csv';
@@ -695,12 +768,12 @@ $this->setView('', 'filter');
 
     }
 
-    /**  
+    /**
      * Downloads all blacklist and updates the Activity Table.
      * @param string this is a description of the first parameter
      * @param int this is a description of the second parameter
      * @return int this describes what the function returns
-     */ 
+     */
 
     public function download_all(){
 
@@ -712,15 +785,15 @@ $this->setView('', 'filter');
             Activity::create('implement', $this->u->getName(), ' All '. ucfirst($this->list_type));
             Utils::downloadFile($list,$filename);
         }
-        
+
     }
 
 
-    /**  
+    /**
      * Downloads all blacklist and updates the Activity Table.
      * @param set_id int Set ID user wish to download
      * @return NULL
-     */ 
+     */
 
     public function download_set($set_id=NULL){
 
@@ -747,17 +820,17 @@ $this->setView('', 'filter');
             # code...
             Activity::create('implement', $this->u->getName(), ' ' .ucfirst($this->list_type).' Set' . $set_id);
             Utils::downloadFile($list, $filename);
-            $msg = 'You have Downloaded Set '.$set_id.', Go to <a href="'.ROOT_URL. $this->list_type . '/history">Approve Set History</a>';   
+            $msg = 'You have Downloaded Set '.$set_id.', Go to <a href="'.ROOT_URL. $this->list_type . '/history">Approve Set History</a>';
             $this->view();
         }
 
-        
+
     }
 
-    /**  
+    /**
      * CREATES/Regenerates ALL blacklist set cache file for Easy Access
      * @return NULL
-     */ 
+     */
 
     public function generate_old_set(){
 

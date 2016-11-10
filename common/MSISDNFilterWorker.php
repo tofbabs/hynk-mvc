@@ -15,7 +15,7 @@
 	$worker = new GearmanWorker();
 	$worker->addServer();
 	$worker->addFunction("process_filter_file", "filter_file");
-	while ($worker->work());	
+	while ($worker->work());
 
 	function filter_file($job){
 
@@ -32,7 +32,7 @@
 	    foreach($uploadedCSVArray as $s)
 	        $uploadedMSISDN[]= filter_var($s[0], FILTER_SANITIZE_NUMBER_INT);
 
-		
+
 		$dbMSISDN = Blacklist::justGet('SELECT DISTINCT(msisdn) FROM list');
 
 	    if (!empty($dbMSISDN))

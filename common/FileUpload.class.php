@@ -21,7 +21,7 @@ class FileUpload{
 		$type = pathinfo(basename($_FILES[$this->uri]["name"]),PATHINFO_EXTENSION);
 	    return $type;
 	}
-	
+
 	function getTempFileName($filename){
 		return $_FILES[$this->uri]['tmp_name'];
 	}
@@ -39,4 +39,3 @@ class FileUpload{
 	// }
 
 }
-

@@ -1,6 +1,6 @@
 <?php include_once 'header.php'; global $privileges;?>
 <!-- VIEW BLACKLIST -->
-		
+
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="box box-color box-bordered">
@@ -17,8 +17,8 @@
 							<a href="#profile" data-toggle='tab'>
 								<i class="fa fa-user"></i>Details</a>
 						</li>
-		
-					
+
+
 						<li>
 							<a href="#activities" data-toggle='tab'>
 								<i class="fa fa-lock"></i>Activities</a>
@@ -57,7 +57,7 @@
 							<div class="scroll-user-widget">
 								<ul class="media-list pre-scrollable">
 
-									<?php 
+									<?php
 										if (empty($activities)) {
 											# code...
 											echo "<h3>No Activity Yet </h3>";
@@ -81,6 +81,6 @@
 			</div>
 		</div>
 	</div>
-			
+
 
 <?php include_once 'footer.php'; ?>

@@ -1,7 +1,7 @@
 <?php
 
 /*
-	Utility operation e.g. CURL, 
+	Utility operation e.g. CURL,
 */
 
 	class Utils{
@@ -11,13 +11,12 @@
 	*/
 
 	static function getData($url){
-
 	    // is cURL installed yet?
 		if (!function_exists('curl_init')){
 			die('Sorry cURL is not installed!');
 		}
 
-		$ch = curl_init();  
+		$ch = curl_init();
 
 		curl_setopt($ch,CURLOPT_URL,$url);
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
@@ -42,21 +41,21 @@
 	   //create name value pairs seperated by &
 		$postData = http_build_query($params);
 
-		$ch = curl_init();  
+		$ch = curl_init();
 
 		curl_setopt($ch,CURLOPT_URL,$url);
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-		
+
 		if (is_null($headers)) {
 	    	# code...
-			curl_setopt($ch,CURLOPT_HEADER, false); 
+			curl_setopt($ch,CURLOPT_HEADER, false);
 		}else{
 			curl_setopt($ch, CURLOPT_HEADER, true);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		}
 
 		curl_setopt($ch, CURLOPT_POST, count($postData));
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);    
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
 
 		$output=curl_exec($ch);
 
@@ -67,7 +66,7 @@
 	/**
 	 * Set error reporting | From Config File
 	 */
-	
+
 	static function setErrorLogging(){
 		if(DEVELOPMENT_ENVIRONMENT == true){
 			error_reporting(E_ALL | E_STRICT);
@@ -84,7 +83,7 @@
 	 * Trace function which outputs variables to system/log/output.php file
 	 */
 	static function trace($var,$append=true){
-		
+
 		$var = is_array($var) || is_object($var) ? json_encode($var) : $var;
 		$var = date('Y-m-d H:i:s') . ': ' . $var;
 	    // $oldString="<?php\ndie();/*";
@@ -241,7 +240,7 @@
     */
 	static public function checkPriv($url){
 
-		$request = explode('/',$url); 
+		$request = explode('/',$url);
     	// print_r($request);
     	// echo ucfirst(array_shift($request));
 		$controller = ucfirst(array_shift($request)) . 'Controller' ;
@@ -262,10 +261,10 @@
 
     }
 
-    /**  
+    /**
      * Downlaods File to Browser for User
      * @return NULL
-     */ 
+     */
     static public function downloadFile($content, $filename='FileDownload'){
 
         # code...
@@ -276,10 +275,10 @@
     	echo $content;
     }
 
-    /**  
+    /**
      * DEBUG Print
      * @return NULL
-    **/ 
+    **/
 
     static public function printOut($msg){
 
@@ -289,7 +288,50 @@
 
     }
 
+    public static function deepFilter(array $original, array $base, $whiteList = false)
+    {
+    	if ($whiteList) {
+    		//This returns difference of two files.
+    		$fileToTraverse = $base;
+    		$flippedArray = array_flip($original);
+    	} else  {
+    		//This deletes the differences of the two files and returns the remainder
+    		$fileToTraverse = $original;
+    		$flippedArray = array_flip($base);
+    	}
 
+    	$d = array();
+    	foreach ($fileToTraverse as $i)
+        	if ( ! isset($flippedArray[$i]))
+            	$d[] = $i;
+    	return $d;
+    }
 
+		public static function checkIfMsisdnExists(array $flippedOriginal, $msisdn)
+		{
+			return isset($flippedOriginal[$msisdn]);
+		}
+
+		public static function doBroadcast(array $companyUsersMapping, $listType = 'Blacklist'){
+
+				$subject = "NEW UPDATE: ".ucfirst($listType)." MSISDN";
+
+				foreach ($companyUsersMapping as $company) {
+						# code...
+						if ( ! empty($company['users']))
+							foreach ($company['users'] as $user) {
+									# code
+									$to = $user->getEmail();
+									$msg = "<html><p>Hello " . $company['name'] . ',</p>';
+									$msg .= "<p> Kindly log on to the Blacklisting Portal <a href='http://blacklist.atp-sevas.com/blacklist'> here </a> to download the latest ". ucfirst($list_type) . " update file.</p>";
+									// $msg .= "You can also implement by invoking an API with endpoint http://blacklist.atp-sevas.com/blacklist/api/fetchAll".ucfirst($this->list_type)." and providing your email and password for HTTP Basic Authentication." . PHP_EOL;
+									$msg .= "<p> You can also implement by downloading the entire list on this dropbox file <a href='https://goo.gl/5UhXby'>here</a></p>";
+									$msg .= "<ul><li>Latest Update time: " . $set_info[0] ."</li>";
+									$msg .= "<li>Additional MSISDN Count: " . $set_info[1] . "</li>";
+									$msg .= "</html>";
+									//Push to Gearman to Send Email;
+									Utils::sendmail($to, $subject, $msg, EMAIL_HEADER);
+							}
+				}
+		}
 }
-

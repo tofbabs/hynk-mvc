@@ -3,7 +3,7 @@
 temp/
 vendor/
 error_log.php
-config.php
+system/config/config.php
 config.js
 *.rdb
 *.lock

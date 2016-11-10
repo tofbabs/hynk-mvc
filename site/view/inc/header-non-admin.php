@@ -217,9 +217,12 @@
                     <li>
                         <a href="<?php echo $host?>/dnd/filter">Filter MSISDN</a>
                     </li>
+										<li>
+                        <a href="<?php echo $host?>/dnd/whitelist">Whitelist MSISDN</a>
+                    </li>
 				</ul>
 			</div>
-			
+
 			<div class="subnav hidden">
 				<div class="subnav-title">
 					<a href="<?php echo $host?>/site/#" class='toggle-subnav'>
@@ -234,7 +237,7 @@
 							<li>
 								<a href="<?php echo $host?>/dnd/single">Do</a>
 							</li>
-							
+
 						</ul>
 					</li>
 				</ul>
@@ -268,7 +271,7 @@
 				</ul>
 			</div>
 
-			
+
 		</div>
 				<div id="main">
 					<div class="container-fluid">
@@ -344,7 +347,7 @@
 
 		                    $_SESSION['host'] = $host;
 
-		                
+
 		            ?>
 		            <?php include_once 'flash.php'; ?>
 
@@ -354,9 +357,9 @@
 		                            <a href="<?php echo $host?>/">Home</a>
 		                            <i class="fa fa-angle-right"></i>
 		                        </li>
-								<li>							
+								<li>
 		                            <a href="<?php echo $host . "/" . $arrUrl[0] ?>"><?php echo ucfirst($arrUrl[0])?></a>
-		                            
+
 		                        </li>
 							</ul>
 							<div class="close-bread">

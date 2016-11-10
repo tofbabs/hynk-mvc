@@ -3,25 +3,25 @@
  * Company Model
 **/
 
-class Category extends CacheModel {
-	
+class Category extends Model {
+
     protected static $tableName = 'Category';
-    protected static $primaryKey = 'category_id'; 
-    
+    protected static $primaryKey = 'category_id';
+
     function setId($value){
         $this->setColumnValue('category_id', $value);
     }
     function getId(){
         return $this->getColumnValue('category_id');
     }
-    
+
     function setCatName($value){
         $this->setColumnValue('category_name', $value);
     }
     function getCatName(){
         return $this->getColumnValue('category_name');
     }
-    
+
     function setCatDesc($value){
         $this->setColumnValue('category_description', $value);
     }
@@ -38,5 +38,5 @@ class Category extends CacheModel {
     function getCreator(){
         return $this->getColumnValue('created_by');
     }
-    
+
 }

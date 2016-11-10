@@ -4,10 +4,10 @@
  */
 class Database extends PDO {
     protected static $instance;
-    
+
     //A cache to hold prepared statements
     protected $cache;
-    
+
     /**
      * Get instance of the PDO
      * @return PDO
@@ -18,13 +18,13 @@ class Database extends PDO {
         }
         return self::$instance;
     }
-	
+
 	function __construct($dsn,$dbname,$dbpass) {
 		parent::__construct($dsn,$dbname,$dbpass);
         $this->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         $this->cache = array();
 	}
-    
+
     /**
      * If the statement is not cached, cache it and return PDOStatement
      * If the statement is already cached, return the cached statement
@@ -37,7 +37,7 @@ class Database extends PDO {
         }
         return $this->cache[$hash];
     }
-    
+
     function __destruct(){
         $this->cache = NULL;
     }

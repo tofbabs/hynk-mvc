@@ -27,19 +27,20 @@ class Model {
     function save() {
 
         $class = get_called_class();
-        $query = "INSERT INTO " . static::$tableName . " (" . implode(",", array_keys($this->columns)) . ") VALUES(";
+        $query = "REPLACE INTO " . static::$tableName . " (" . implode(",", array_keys($this->columns)) . ") VALUES(";
         $keys = array();
         Utils::trace($this->columns);
         foreach ($this->columns as $key => $value) {
             $keys[":" . $key] = $value;
         }
-        
+
         $query .= implode(",", array_keys($keys)) . ")";
 
         Utils::trace($query);
         $db = Database::getInstance();
 
         $s = $db->getPreparedStatment($query);
+
         // snippet uses PDO
         // Check for Duplicate Entry
         try {
@@ -71,6 +72,17 @@ class Model {
         $db = Database::getInstance();
         $s = $db->getPreparedStatment($query);
         $s->execute(array(':id' => $this->columns[static::$primaryKey]));
+    }
+
+    /**
+    * This function deletes an entry in bulk from DB.
+    **/
+    static function deleteBulk($tableName, $columnName, $toBeDeleted) {
+      $columnPlaceholders = implode(',', array_fill(0, count($toBeDeleted), '?'));
+      $toBeDeleted = implode(',', $toBeDeleted);
+      $query = "DELETE FROM $tableName WHERE $columnName IN ($toBeDeleted)";
+      $db = Database::getInstance();
+      return $db->query($query);
     }
 
     /**
@@ -119,7 +131,7 @@ class Model {
      * @example get('SELECT * FROM TABLE WHERE name=:user OR age<:age',array(name=>'Bond',age=>25))
      */
     static function get($query, $condition = array()) {
-        
+
         // Utils::printOut($query);
 
         $db = Database::getInstance();

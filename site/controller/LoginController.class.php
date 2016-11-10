@@ -3,18 +3,18 @@
  * Site Index Controller
  */
 class LoginController extends Controller {
-	
+
 	function __construct() {
 		parent::__construct();
 	}
-    
+
     function index(){
-        
+
         unset($_SESSION['company']);
         unset($_SESSION['FILE_PROCESSING']);
         unset($_SESSION['user_id']);
 
-        unset($_SESSION);
+        unset($_SESSION);+
 
     	$this->setView('', 'login');
 
@@ -34,7 +34,7 @@ class LoginController extends Controller {
     		$this->notifyBar('error','User Doesn\'t Exist');
 
     	}
-    	 
+
     }
 
     function forgotten(){
@@ -89,6 +89,7 @@ class LoginController extends Controller {
         if (isset($_POST['resetBtn'])){
 
             $u = User::getOne(array('user_email' => $_POST['email']));
+
             if ($u->getId() != null ) {
                 # code...
                 $msg = 'Kindly follow this link to reset your password '. ROOT_URL .'/login/reset/' . str_rot13($u->getEmail());
@@ -126,7 +127,7 @@ class LoginController extends Controller {
         }
 
     }
-   
+
 }
 
 ?>

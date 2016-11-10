@@ -4,7 +4,7 @@ global $privileges;
  * Site Index Controller
  */
 class UserController extends Controller {
-	
+
     private $session_company;
     private $u;
 
@@ -16,7 +16,7 @@ class UserController extends Controller {
         // Utils::printOut($u);
 
 	}
-    
+
     function index(){
 
         // print_r($_SESSION);
@@ -31,9 +31,9 @@ class UserController extends Controller {
 
         $this->setView('', 'add-user');
         $isset_primary_user = FALSE;
-    	
-        /* 
-            If Post Button is clicked 
+
+        /*
+            If Post Button is clicked
         */
     	if(isset($_POST['addNewUserBtn'])) {
 
@@ -83,7 +83,7 @@ class UserController extends Controller {
                     $company = Company::getOne(array('company_id' => $pu->getCompany()));
                     $company_id = $company->getId();
                 }
-                    
+
                 Utils::printOut("Company ID to Create/Update:" . $company_id);
 
                 // Check if user set secodary email, create or update user if set
@@ -104,10 +104,13 @@ class UserController extends Controller {
 
                         $this->sendWelcomeEmail($su);
                     }
-                    
+
 
                 // Log Company Account Creation
                 Activity::create('add-user',$_SESSION['company']->getName(), $company_name);
+
+
+
                 // Create or Update Company Details
                 $company->setName($company_name);
                 $company->setPrivilege($role);
@@ -118,20 +121,20 @@ class UserController extends Controller {
 
                 if ($isset_primary_user) $this->notifyBar('success', $company_name . ' Profile Updated.');
                 else $this->notifyBar('success', $company_name .' Profile Created.');
-            } 
+            }
             else{
                 $this->notifyBar('error', 'Please Complete Required Fields');
             }
 
             $this->view();
-            
+
     	}
-        
+
     }
 }
 
     /*
-    **  View Method to display list of users  
+    **  View Method to display list of users
     **
     */
 
@@ -140,21 +143,21 @@ class UserController extends Controller {
         // Initializing Company List Variable Buffer
         $company_list = array();
 
-        // Validating User request 
+        // Validating User request
         $key = !is_null($role) ? array_search($role, $this->arrRoles) : TRUE;
 
         if (isset($role) && $key != FALSE) {
             # code...
             $company_list = Company::getAll(array('company_role'=> $key));
-            // Building Data Structure for User View 
+            // Building Data Structure for User View
             $this->setVariable('role', $role);
-            
+
         }else{
 
             if ($key == FALSE) {
                 $this->notifyBar('error', 'User Group ' . $role . ' Doesn\'t exist.');
             }
-            
+
             $company_list = Company::getAll();
             $this->setVariable('role', 'All Users');
         }
@@ -165,7 +168,7 @@ class UserController extends Controller {
 
         $this->setVariable('users', $_userlist);
         $this->setView('', 'users');
-       
+
     }
 
     function _buildUsers(&$company_list){
@@ -210,7 +213,7 @@ class UserController extends Controller {
 
             Utils::sendmail($user->getEmail(), $subject, $body, EMAIL_HEADER);
         }
-            
+
     }
 
     function delete($company_id){
@@ -248,7 +251,7 @@ class UserController extends Controller {
 
         // Check if Session User has permission to edit particular User
         if($this->u->getId() != $id && $this->u->getPrivilege() !== '1') {
-            
+
             $this->profile($id);
             exit();
         }
@@ -267,10 +270,10 @@ class UserController extends Controller {
             }
             // Set the rest as Secondary User
             $this->setVariable('secondary_user', $user);
-            
+
         }
 
-        
+
         $this->setVariable('company_id', $id);
         $this->setVariable('company_name', $c->getName());
         $this->setVariable('role', ucfirst($this->arrRoles[$c->getPrivilege()]));
@@ -282,7 +285,7 @@ class UserController extends Controller {
     function profile($company_id){
 
         $company = Company::getOne(array('company_id' => $company_id));
-        
+
         if ($company->getId() == NULL) {
             # code...
             $this->notifyBar('error','Company Doesn\'t Exist');
@@ -301,7 +304,7 @@ class UserController extends Controller {
         $this->setVariable('activities', $a);
 
     }
-    
+
     function _resetPasswordBC(){
 		$u = User::getAll(array('active' => 0));
 

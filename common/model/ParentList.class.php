@@ -2,14 +2,14 @@
 /**
  * User Model
  */
-class ParentList extends CacheModel {
-	
+class ParentList extends Model {
+
     protected static $tableName = 'list';
     protected static $primaryKey = 'id';
     protected static $list_type;
 
     function __construct() {
-        
+
         parent::__construct();
         $this->setColumnValue('list_type', static::$list_type);
     }
@@ -18,7 +18,7 @@ class ParentList extends CacheModel {
     function getId(){
         return $this->getColumnValue('id');
     }
-    
+
     function setMsisdn($value){
         if ($value) {
             # code...
@@ -28,7 +28,7 @@ class ParentList extends CacheModel {
     }
     function getMsisdn(){
         return $this->getColumnValue('msisdn');
-    } 
+    }
 
     function setUploadSet($value){
         # code...
@@ -36,7 +36,7 @@ class ParentList extends CacheModel {
     }
     function getUploadSet(){
         return $this->getColumnValue('upload_set');
-    } 
+    }
 
     // Update time is auto set
     function getUpdateTime(){
@@ -83,48 +83,48 @@ class ParentList extends CacheModel {
         return $this->getColumnValue('list_type');
     }
 
-    /**   
+    /**
     *   @desc Overrides Model::getOne; SpeciFies List type in condition
     *   @param condition array reference
-    *   @param order INT 
+    *   @param order INT
     *   @param startIndex INT
     *   @param count INT
     *   @return Multiple Object of corresponding Model
     **/
 
     public static function getAll($condition = array(), $order = NULL, $startIndex = NULL, $count = NULL){
-        
+
         // Gets List Type and specify in condition
         $condition['list_type'] = static::$list_type;
         return parent::getAll($condition, $order, $startIndex, $count);
 
     }
 
-    /**   
+    /**
     *   @desc Overrides Model::getOne; SpeciFies List type in condition
     *   @param condition array reference
-    *   @param order INT 
+    *   @param order INT
     *   @param startIndex INT
     *   @return One Object of corresponding Model
     **/
 
     public static function getOne($condition = array(), $order = NULL, $startIndex = NULL){
-        
+
         // Gets List Type and specify in condition
         $condition['list_type'] = static::$list_type;
         return parent::getOne($condition, $order, $startIndex);
-        
+
     }
 
-    
+
     public static function getCount($condition = array()){
-        
+
         // Gets List Type and specify in condition
         $condition['list_type'] = static::$list_type;
         return parent::getCount($condition);
-        
+
     }
-   
+
 
     static function getUnique($column='msisdn', $condition=array()){
         // Gets List Type and specify in condition
@@ -142,7 +142,7 @@ class ParentList extends CacheModel {
 
     static function updateStatus($value){
         $query = "UPDATE " . static::$tableName ." SET status=1, upload_set=" . $value ." WHERE status=0 ";
-        $query .= "AND list_type = '". static::$list_type . "'";        
+        $query .= "AND list_type = '". static::$list_type . "'";
 
         Utils::trace('Updating Pending Blacklist Query: ' . $query);
         $db = Database::getInstance();
@@ -155,9 +155,9 @@ class ParentList extends CacheModel {
         }
 
         $s->execute();
-        self::clearCache();
+        //self::clearCache();
         return 200;
-        
+
     }
 
     static function writeListToFile($file,$set_id=NULL, $type=NULL){
@@ -168,6 +168,7 @@ class ParentList extends CacheModel {
             # code...
             $query .= "upload_set=" . $set_id . " AND ";
         }
+
         if(isset($type)) $query .= "list_type = '". $type."' AND ";
         else $query .= "list_type = '". static::$list_type."' AND ";
 
@@ -177,7 +178,7 @@ class ParentList extends CacheModel {
         $db = Database::getInstance();
         $s = $db->getPreparedStatment($query);
         $s->execute();
-        
+
     }
 
     static function getData($query){
@@ -199,7 +200,6 @@ class ParentList extends CacheModel {
 
         // return $data;
     }
-
 
     /**
      * Get a single item
@@ -235,7 +235,7 @@ class ParentList extends CacheModel {
 
         //     return $data;
         // }
-        
+
     }
 
     /*
@@ -244,5 +244,5 @@ class ParentList extends CacheModel {
     static function searchEntire(){
     }
 
-   
+
 }

@@ -5,7 +5,7 @@
  * $primaryKey
  */
 class CacheModel extends Model{
-    
+
     protected static $tableName = '';
     protected static $primaryKey = '';
     protected $columns;
@@ -61,7 +61,7 @@ class CacheModel extends Model{
     //     // print_r(self::get($query,$condition));
     //     return self::get($query,$condition);
     // }
-    
+
     /**
      * Pass a custom query and condition
      * @example get('SELECT * FROM TABLE WHERE name=:user OR age<:age',array(name=>'Bond',age=>25))
@@ -91,7 +91,7 @@ class CacheModel extends Model{
             return unserialize($redis->hget($query_list, $query_key));
 
         } else{
-            
+
             $data = parent::get($query, $condition);
             self::clearCache($query_key, $query_list);
             // id to column array mapping
@@ -142,14 +142,13 @@ class CacheModel extends Model{
             $redis->hset($query_list, $query_key, serialize($data));
             // $redis->expire($query_list, 3600);
 
-            
 
             // Callback Function to fetch from Cache
             // self::getOne($condition,$order,$startIndex);
 
             return $data;
         }
-        
+
     }
-    
+
 }

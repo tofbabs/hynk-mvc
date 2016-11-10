@@ -2,16 +2,16 @@
 /**
  * User Model
  */
-class User extends CacheModel {
-	
+class User extends Model {
+
     protected static $tableName = 'User';
-    protected static $primaryKey = 'user_id'; 
-    
+    protected static $primaryKey = 'user_id';
+
 
     function getId(){
         return $this->getColumnValue('user_id');
     }
-    
+
     function setCompany($value){
         $this->setColumnValue('user_company_id', $value);
     }
@@ -25,7 +25,7 @@ class User extends CacheModel {
     function getPassword(){
         return $this->getColumnValue('user_pass');
     }
-    
+
     // Email is Unique Variable
     function setEmail($value){
         $this->setColumnValue('user_email', $value);
@@ -33,7 +33,7 @@ class User extends CacheModel {
     function getEmail(){
         return $this->getColumnValue('user_email');
     }
-    
+
     //  Set Level e.g. Secondary or Primary
     function setLevel($value){
         $this->setColumnValue('user_level', $value);
@@ -41,7 +41,7 @@ class User extends CacheModel {
     function getLevel(){
         return $this->getColumnValue('user_level');
     }
-    
+
     //  Set Level e.g. Secondary or Primary
     function setActive($value){
         $this->setColumnValue('active', $value);

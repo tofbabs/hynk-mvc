@@ -2,17 +2,17 @@
 /**
  * Activity Model
  */
-class Activity extends CacheModel {
-	
+class Activity extends Model {
+
     protected static $tableName = 'Activity';
     protected static $primaryKey = 'id';    
 
     function getId(){
         return $this->getColumnValue('id');
     }
-    
-    /* 
-        Possible Actions: Admin(add-user, delete-user, update-user, add-numbers, 
+
+    /*
+        Possible Actions: Admin(add-user, delete-user, update-user, add-numbers,
         delete-numbers, approve-numbers), Providers ( implement-list, filter-numbers), Agents (add-user)
     */
     function setAction($value){
@@ -31,14 +31,14 @@ class Activity extends CacheModel {
     function getActor(){
         return $this->getColumnValue('actor');
     }
-    
+
     function setObject($value){
         $this->setColumnValue('object', $value);
     }
     function getObject(){
         return $this->getColumnValue('object');
     }
-    
+
     function getTimestamp(){
         return $this->getColumnValue('timestamp');
     }
@@ -55,6 +55,6 @@ class Activity extends CacheModel {
             $a->setActor($actor);
             $a->save();
         }
-        
+
     }
 }

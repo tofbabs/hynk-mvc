@@ -38,6 +38,7 @@
 
 		  foreach($uploadedCSVArray as $s) {
 				$msisdn = filter_var($s, FILTER_SANITIZE_NUMBER_INT);
+				$msisdn = substr($s, -10);
 				if(strlen($msisdn) < 10)
 					continue;
 				$uploadedMSISDN[] = $msisdn;

@@ -313,7 +313,6 @@
 		}
 
 		public static function doBroadcast(array $companyUsersMapping, $set_info, $listType = 'Blacklist'){
-
 				$subject = "NEW UPDATE: ".ucfirst($listType)." MSISDN";
 
 				foreach ($companyUsersMapping as $company) {

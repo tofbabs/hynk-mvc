@@ -48,17 +48,25 @@
 			Blacklist::deleteBulk('list', 'msisdn', $uploadedMSISDN);
 
 			//Delete from file.
-			$file = FILE_PATH. 'dnd.csv';
-			unlink($file); //Delete the existing DND file before wirting a new one.
-			Blacklist::writeListToFile($file);
+			$list_type = 'dnd'; //hard coded
+
+			$temp = '/tmp/' . $list_type . time() .'.csv';
+
+			Blacklist::writeListToFile($temp);
+			$blacklist = file_get_contents($temp);
+
+			file_put_contents(FILE_PATH . $list_type. '.csv' , $blacklist);
 
 			$companies = Company::getAll(array('company_role'=> '3'));
 			$companyUsersMapping = array();
 
+			$index = 0;
+
 			foreach ($companies as $company) {
 				$u = User::getAll(array('user_company_id' => $company->getId()));
-				$companyUsersMapping[]['users'] = $u;
-				$companyUsersMapping[]['name'] = $company->getName();
+				$companyUsersMapping[$index]['users'] = $u;
+				$companyUsersMapping[$index]['name'] = $company->getName();
+				$index++;
 			}
 
 			$set_info = array(date('Y-m-d'), count($uploadedMSISDN));

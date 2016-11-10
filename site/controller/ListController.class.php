@@ -636,7 +636,7 @@ function whitelist() {
 
       if ($client->returnCode() != GEARMAN_SUCCESS) throw new Exception("Could not add the job to the queue.", 1);
 
-      $this->notifyBar('info','Numbers Successfully Added to Whitelist..');
+      $this->notifyBar('info','Numbers blacklisted successfully..');
 
   } catch(Exception $e) {
       // some error handling

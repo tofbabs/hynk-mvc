@@ -14,7 +14,7 @@
 					<ul class="tabs tabs-inline tabs-top">
 						<li class='active'>
 							<a href="#fileUpload" data-toggle='tab'>
-								<i class="fa fa-file"></i>File Filter</a>
+								<i class="fa fa-file"></i>File Whitelist</a>
 						</li>
 						<li>
 							<a href="#onScreen"   data-toggle='tab'>

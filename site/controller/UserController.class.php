@@ -288,7 +288,12 @@ class UserController extends Controller {
 
         if ($company->getId() == NULL) {
             # code...
-            $this->notifyBar('error','Company Doesn\'t Exist');
+            // Handles fallback if Company Name is used instead of 
+            $company = Company::getOne(array('company_name' => $company_id));
+
+            if ($company->getId() == NULL) {
+                $this->notifyBar('error','Company Doesn\'t Exist');
+            }
         }
 
         $this->privRoles = array(1,2,3);

@@ -41,23 +41,23 @@
 
 		if (($handle = fopen($workload->file, "r")) !== FALSE) {
 
-		    while (($data = fgetcsv($handle, 20, "\n")) !== FALSE) {
+			while (($data = fgetcsv($handle, 20, "\n")) !== FALSE) {
 
-		    	$msisdn = substr(trim($data[0]), -10);
-					$msisdn = filter_var($msisdn, FILTER_SANITIZE_NUMBER_INT);
-		        if ($msisdn == '' || !is_numeric($msisdn)) {
+				$msisdn = substr(trim($data[0]), -10);
+				$msisdn = filter_var($msisdn, FILTER_SANITIZE_NUMBER_INT);
+				if ($msisdn == '' || !is_numeric($msisdn)) {
 		            # code...
-								echo 'BAD INPUT' . $msisdn . PHP_EOL;
-		            continue;
-		        }
+					echo 'BAD INPUT' . $msisdn . PHP_EOL;
+					continue;
+				}
 
-						if (Utils::checkIfMsisdnExists($existingDnd, $msisdn))
-							continue;
+				if (Utils::checkIfMsisdnExists($existingDnd, $msisdn))
+					continue;
 
 		        //echo $msisdn .'got here'. PHP_EOL;
-		        $newList->setMsisdn($msisdn);
-		        $newList->save();
-		    }
+				$newList->setMsisdn($msisdn);
+				$newList->save();
+			}
 
 		    fclose($handle);
 		}

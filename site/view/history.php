@@ -23,7 +23,7 @@
                                 <div class="activity">
                                     <div class="user">
                                         <a href="<?php echo $host . "/user/profile/" . str_replace(' ', '+', $entity->getUser()) ?>"><?php echo $entity->getUser() ?></a> approved
-                                        <span><a href="<?php echo $host . $title . '/download-set/'. $entity->getId() ?>">
+                                        <span><a href="<?php echo $host . strtoupper($title) . '/download-set/'. $entity->getId() ?>">
                                         <?php echo $entity->getListsize() . ' ' . strtoupper($entity->getListType())?>  MSISDNs
                                         </a></span>
                                     </div>

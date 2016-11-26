@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
+// require 'vendor/autoload.php';
 
 date_default_timezone_set('Africa/Lagos');
 define('ROOT',dirname(realpath(__FILE__))."/");
@@ -44,7 +44,7 @@ function callHook() {
     $urlArray = array();
     $urlArray = explode("/",$url);
     // print_r($urlArray);
-    $controller = DEFAULT_CONROLLER;
+    $controller = DEFAULT_CONTROLLER;
     $action = DEFAULT_ACTION;
     $data = array();
     // print_r($urlArray);

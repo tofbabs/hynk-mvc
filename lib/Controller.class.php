@@ -4,68 +4,25 @@
  */
 class Controller {
 
-    protected $role;
     protected $template;
     protected $flash;
-    protected $arrRoles = array(1=>'administrator', 2=>'customer care', 3=>'provider');
-    protected $privRoles = array('admin' => 1,'customer_care' => 2,'provider' => 3);
 
     function __construct() {
 
         $this->template = new Template();
         $this->flash = array();
-        $this->setVariable('title', strtolower(substr($this->getPageTitle(),0,-10)));
 
-        // Custom Variables 
-        $blacklist_count = DNDList::getDistinctCount(array('status' => 1));
-        $dnc_count = DNCList::getDistinctCount(array('status' => 1));
-        $this->setVariable('categories', Category::getAll());
-        $this->setVariable('blacklist_count', $blacklist_count);
-        $this->setVariable('dnc_count', $dnc_count);
-
-        // Start a new Session if none existed
-        if ( $this->is_session_started() === FALSE ) {
-            session_start();
-            $this->setView('', 'login');
-        }
-
-        // Utils::printOut(substr($this->getPageTitle(),0,-10));
-        
     }
 
-    function setPrivRoles(&$value){
-        $this->privRoles = $value;
-    }
-
-    function setRole(&$value){
-        $this->role = $value;
-    }
-
-    function checkPermission($priv){
-      
-        if (!in_array($priv, $this->privRoles)) {
-            # code...
-            return FALSE;
-        }
-        return TRUE;
-    }
-
-    public function isAllowed(){
-        $allowed = TRUE;
-        if (isset($_SESSION['user_role']) && $this->checkPermission($_SESSION['user_role']) == FALSE) $allowed = FALSE;
-        return $allowed;
-    }
     public function getPageTitle(){
         // echo get_called_class();
         return get_called_class();
     }
-    
+
     function index(){
         error_log("Controller[".get_called_class()."] index method is not defined");
-        
-        
     }
-    
+
     protected function setView($folder,$file){
         $this->template->set($folder,$file);
         if (isset($_SESSION['user_role']) && $this->checkPermission($_SESSION['user_role']) == FALSE) {
@@ -133,11 +90,6 @@ class Controller {
         // $this->flash[] = $info;
         // array_push($this->flash, $info);
 
-    }
-
-    public function resetview(){
-        # code...
-        $this->setView('','bulk');
     }
     
     function __destruct(){

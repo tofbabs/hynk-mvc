@@ -7,9 +7,6 @@ define('ROOT',dirname(realpath(__FILE__))."/");
 
 
 global $host;
-global $privileges;
-
-$privileges = array(1=>'Administrators', 2=>'Customer Care Agent', 3=>'Service Providers');
 
 /**
  * 

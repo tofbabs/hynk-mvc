@@ -1,0 +1,1 @@
+This simply describes the function of OOP in creating an MVC application

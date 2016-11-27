@@ -12,9 +12,9 @@ define('ROOT_URL', 'http://localhost/hynk-mvc/');
 define('NOT_FOUND_CONTROLLER','index');
 
 define('DB_HOST','127.0.0.1');
-define('DB_NAME','campaign_manager');
-define('DB_USER','root');
-define('DB_PASS','fileopen');
+define('DB_NAME','db_name');
+define('DB_USER','db_user');
+define('DB_PASS','db_pass');
 
 
 ?>
